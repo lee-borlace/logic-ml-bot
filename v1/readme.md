@@ -1,21 +1,34 @@
-# Setting up environment
-These are the steps if you want to be able to debug rasa. There might be better ways to do this - I'm not a Python expert!
-
+# Setting up environment (VS Code)
 1. Install Python 3.7.X and Conda
-2. From conda prompt : `conda create -n logicmlbot1`
+2. From conda prompt : `conda create -n logicmlbot1 pip`
 3. `conda activate logicmlbot1`
-4. `conda install pip`
-5. Clone rasa from https://github.com/RasaHQ/rasa.
-6. Install rasa's prereqs but not rasa itself - see https://rasa.com/docs/rasa/user-guide/installation/#building-from-source. I.e. `pip install -r requirements.txt`
-7. `pip install ptvsd`
-8. From where you cloned rasa, edit `/rasa/rasa/__main__.py` to include the breakpoint / debug stuff (ptvsd) -
+
+## Environment to just consume rasa without debugging it
+1. Install rasa as per https://rasa.com/docs/rasa/user-guide/installation/#quick-installation.
+
+```json
+{
+    "python.pythonPath": "C:\\Users\\Lee\\Anaconda3\\envs\\logicmlbot1\\python.exe"
+}
+```
+
+## Environment to debug rasa itself
+There might be better ways to do this - I'm not a Python expert!
+1. Clone rasa from https://github.com/RasaHQ/rasa.
+2. Install rasa's prereqs but not rasa itself - see https://rasa.com/docs/rasa/user-guide/installation/#building-from-source. I.e. `pip install -r requirements.txt`
+3. `pip install ptvsd`
+4. From where you cloned rasa, edit `/rasa/rasa/__main__.py` to include the breakpoint / debug stuff (ptvsd) in the beginning of main() -
 ```python
 import ptvsd
 ptvsd.enable_attach()
-ptvsd.wait_for_attach()
+print("DEBUG? Y/N")
+line = sys.stdin.readline()
+if line == 'y' or line =='Y" :
+    print("ATTACH DEBUGGER NOW...")
+    ptvsd.wait_for_attach()
 ```
-9. From conda prompt (workaround for an issue) : ```pip3 install gast==0.2.2```
-10. Ensure your launch.json looks like the following.
+5. From conda prompt (workaround for an issue) : ```pip install gast==0.2.2```
+6. Ensure your launch.json looks like the following.
 
 ```
 {
@@ -33,16 +46,28 @@ ptvsd.wait_for_attach()
 }
 ```
 
-# Debugging
-1. Open a conda terminal, go to where your bot is (doesn't have to be in the Rasa folder) and run the following. This sets PYTHONPATH so rasa resolves, and changes directory to where the bot under development is. You may need to change relative paths to correspond to where rasa and the bot sit in relation to each other.
+7. Set up Python path as appropriate in .vscode
+
+```json
+{
+    "python.pythonPath": "C:\\Users\\Lee\\Anaconda3\\envs\\logicmlbot1\\python.exe"
+}
+```
+
+# Debugging  (VS Code)
+1. Open the root folder of the rasa repo in Visual Studio Code.
+2. Open a conda terminal, cd to where your bot is (doesn't have to be in the Rasa folder) and run the following. This sets PYTHONPATH so rasa resolves, and changes directory to where the bot under development is. You may need to change relative paths to correspond to where rasa and the bot sit in relation to each other.
 
 ```
 conda activate logicmlbot1
-set PYTHONPATH=C:\Users\Lee\Documents\GitHub\rasa
+set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1;C:\Users\Lee\Documents\GitHub\rasa
 cd C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1
-python ..\..\rasa\rasa\__main__.py train
+python ..\..\rasa\rasa\__main__.py train --force
 python ..\..\rasa\rasa\__main__.py shell
  ```
 
 2. When it runs it will prompt that you can attach the debugger.
+
+# Running without debugging rasa
+If you don't want to debug rasa then run rasa as per the docco. However, make sure PYTHONPATH is set to allow Python to find any custom modules for this bot, e.g. `set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1`. 
 
