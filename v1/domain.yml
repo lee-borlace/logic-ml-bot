@@ -12,6 +12,7 @@ actions:
 - utter_did_that_help
 - utter_happy
 - utter_goodbye
+- action_hello_world
 
 templates:
   utter_greet:
