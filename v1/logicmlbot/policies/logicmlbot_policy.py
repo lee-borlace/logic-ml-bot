@@ -50,6 +50,7 @@ class LogicMlBotPolicy(Policy):
         result = [0.0] * domain.num_actions
         idx = domain.index_for_action("action_hello_world")
         result[idx] = 1.0
+
         return result
 
     def persist(self, path: Text) -> None:

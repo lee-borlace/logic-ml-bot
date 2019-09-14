@@ -69,6 +69,9 @@ python ..\..\rasa\rasa\__main__.py shell
 
 2. When it runs it will prompt that you can attach the debugger.
 
+Note 1 : I've also created convenience Windows scripts debugtrain.bat and debugshell.bat to trigger the above. You'd need to customise them for your environment if you want to use them.
+Note 2 : If you want to debug the custom actions, policy, component, you can run the above, but then attach the debugger from the VS Code instance which has the custom bot code open.
+
 ## Debugging actions
 Note : unless you muck around with the config a bit (not covered here), you can only debug either rasa itself or the actions, but not both at the same time
 
@@ -78,6 +81,8 @@ Note : unless you muck around with the config a bit (not covered here), you can 
 4. `set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1;C:\Users\Lee\Documents\GitHub\rasa`
 5. invoke rasa `python ..\..\rasa\rasa\__main__.py run actions --actions logicmlbot.actions.logicmlbot_actions`
 6. Attach debugger if you wish!
+
+Note : I've also created convenience Windows script debugactions.bat to trigger the above. You'd need to customise them for your environment if you want to use them.
 
 # Running without debugging rasa
 If you don't want to debug rasa then run rasa as per the docco. However, make sure PYTHONPATH is set to allow Python to find any custom modules for this bot, e.g. `set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1`. 

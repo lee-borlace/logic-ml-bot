@@ -6,6 +6,6 @@ pipeline: supervised_embeddings
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
 policies:
-  - name: "logicmlbot.policies.logicmlbot_policy.LogicMlBotPolicy"
+  - name: "logicmlbot.policies.LogicMlBotPolicy"
   - name: KerasPolicy
   - name: MappingPolicy
