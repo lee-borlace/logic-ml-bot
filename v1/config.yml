@@ -1,11 +1,22 @@
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
 language: en
-pipeline: supervised_embeddings
+pipeline: 
+  - name : "WhitespaceTokenizer"
+  - name : "RegexFeaturizer"
+  - name : "logicmlbot.components.logicmlbot_extractor.LogicMlBotExtractor"
+  - name : "CRFEntityExtractor"
+  - name : "EntitySynonymMapper"
+  - name : "CountVectorsFeaturizer"
+  - name : "CountVectorsFeaturizer"
+    analyzer: "char_wb"
+    min_ngram: 1
+    max_ngram: 4
+  - name : "EmbeddingIntentClassifier"
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
 policies:
-  - name: "logicmlbot.policies.LogicMlBotPolicy"
+  - name: "logicmlbot.policies.logicmlbot_policy.LogicMlBotPolicy"
   - name: KerasPolicy
   - name: MappingPolicy
