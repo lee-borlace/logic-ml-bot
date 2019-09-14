@@ -55,6 +55,7 @@ if line == 'y' or line =='Y" :
 ```
 
 # Debugging  (VS Code)
+## Debugging rasa
 1. Open the root folder of the rasa repo in Visual Studio Code.
 2. Open a conda terminal, cd to where your bot is (doesn't have to be in the Rasa folder) and run the following. This sets PYTHONPATH so rasa resolves, and changes directory to where the bot under development is. You may need to change relative paths to correspond to where rasa and the bot sit in relation to each other.
 
@@ -67,6 +68,16 @@ python ..\..\rasa\rasa\__main__.py shell
  ```
 
 2. When it runs it will prompt that you can attach the debugger.
+
+## Debugging actions
+Note : unless you muck around with the config a bit (not covered here), you can only debug either rasa itself or the actions, but not both at the same time
+
+1. Open another conda prompt
+2. `conda activate logicmlbot1`
+3. cd to the location of the bot e.g. `cd C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1`
+4. `set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1;C:\Users\Lee\Documents\GitHub\rasa`
+5. invoke rasa `python ..\..\rasa\rasa\__main__.py run actions --actions logicmlbot.actions.logicmlbot_actions`
+6. Attach debugger if you wish!
 
 # Running without debugging rasa
 If you don't want to debug rasa then run rasa as per the docco. However, make sure PYTHONPATH is set to allow Python to find any custom modules for this bot, e.g. `set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1`. 
