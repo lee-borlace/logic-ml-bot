@@ -20,10 +20,10 @@ There might be better ways to do this - I'm not a Python expert!
 4. From where you cloned rasa, edit `/rasa/rasa/__main__.py` to include the breakpoint / debug stuff (ptvsd) in the beginning of main() -
 ```python
 import ptvsd
-ptvsd.enable_attach()
 print("DEBUG? Y/N")
-line = sys.stdin.readline()
-if line == 'y' or line =='Y" :
+line = sys.stdin.readline().strip()
+if(line == 'y' or line =='Y') :
+    ptvsd.enable_attach()
     print("ATTACH DEBUGGER NOW...")
     ptvsd.wait_for_attach()
 ```
@@ -62,6 +62,7 @@ if line == 'y' or line =='Y" :
 ```
 conda activate logicmlbot1
 set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1;C:\Users\Lee\Documents\GitHub\rasa
+set PYTHONPATH=C:\Users\lborlace\Documents\GitHub\Non-Forked\logic-ml-bot\v1;C:\Users\lborlace\Documents\GitHub\Non-Forked\rasa
 cd C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1
 python ..\..\rasa\rasa\__main__.py train --force
 python ..\..\rasa\rasa\__main__.py shell
