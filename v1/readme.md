@@ -2,13 +2,14 @@
 1. Install Python 3.7.X and Conda
 2. From conda prompt : `conda create -n logicmlbot1 pip`
 3. `conda activate logicmlbot1`
+4. You may need to install Visual Studio with C++ workload enabled to get past some of the dependencies. There is probably a way to get it working with just the build tools installed but I couldn't get it working.
 
 ## Environment to just consume rasa without debugging it
 1. Install rasa as per https://rasa.com/docs/rasa/user-guide/installation/#quick-installation.
 
 ```json
 {
-    "python.pythonPath": "C:\\Users\\Lee\\Anaconda3\\envs\\logicmlbot1\\python.exe"
+    "python.pythonPath": "C:\\Users\\LeeBorlace\\Anaconda3\\envs\\logicmlbot1\\python.exe"
 }
 ```
 
@@ -50,7 +51,7 @@ if line == 'y' or line =='Y" :
 
 ```json
 {
-    "python.pythonPath": "C:\\Users\\Lee\\Anaconda3\\envs\\logicmlbot1\\python.exe"
+    "python.pythonPath": "C:\\Users\\LeeBorlace\\Anaconda3\\envs\\logicmlbot1\\python.exe"
 }
 ```
 
@@ -61,8 +62,8 @@ if line == 'y' or line =='Y" :
 
 ```
 conda activate logicmlbot1
-set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1;C:\Users\Lee\Documents\GitHub\rasa
-cd C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1
+set PYTHONPATH=C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1;C:\Users\LeeBorlace\Documents\GitHub\rasa
+cd C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1
 python ..\..\rasa\rasa\__main__.py train --force
 python ..\..\rasa\rasa\__main__.py shell
  ```
@@ -77,13 +78,13 @@ Note : unless you muck around with the config a bit (not covered here), you can 
 
 1. Open another conda prompt
 2. `conda activate logicmlbot1`
-3. cd to the location of the bot e.g. `cd C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1`
-4. `set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1;C:\Users\Lee\Documents\GitHub\rasa`
+3. cd to the location of the bot e.g. `cd C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1`
+4. `set PYTHONPATH=C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1;C:\Users\LeeBorlace\Documents\GitHub\rasa`
 5. invoke rasa `python ..\..\rasa\rasa\__main__.py run actions --actions logicmlbot.actions.logicmlbot_actions`
 6. Attach debugger if you wish!
 
 Note : I've also created convenience Windows script debugactions.bat to trigger the above. You'd need to customise them for your environment if you want to use them.
 
 # Running without debugging rasa
-If you don't want to debug rasa then run rasa as per the docco. However, make sure PYTHONPATH is set to allow Python to find any custom modules for this bot, e.g. `set PYTHONPATH=C:\Users\Lee\Documents\GitHub\logic-ml-bot\v1`. 
+If you don't want to debug rasa then run rasa as per the docco. However, make sure PYTHONPATH is set to allow Python to find any custom modules for this bot, e.g. `set PYTHONPATH=C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1`. 
 
