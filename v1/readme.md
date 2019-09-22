@@ -21,10 +21,10 @@ There might be better ways to do this - I'm not a Python expert!
 4. From where you cloned rasa, edit `/rasa/rasa/__main__.py` to include the breakpoint / debug stuff (ptvsd) in the beginning of main() -
 ```python
 import ptvsd
-ptvsd.enable_attach()
 print("DEBUG? Y/N")
-line = sys.stdin.readline()
-if line == 'y' or line =='Y" :
+line = sys.stdin.readline().strip()
+if(line == 'y' or line =='Y') :
+    ptvsd.enable_attach()
     print("ATTACH DEBUGGER NOW...")
     ptvsd.wait_for_attach()
 ```
