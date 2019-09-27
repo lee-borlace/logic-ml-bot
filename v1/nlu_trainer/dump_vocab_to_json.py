@@ -11,15 +11,19 @@ import re
 MODEL = "en_core_web_lg"
 nlp = spacy.load(MODEL)
 
-MAX_WORDS = 1000
+print(f"Total vocab count = {len(nlp.vocab)}") #1340242
+MAX_WORDS_TO_PROCESS = 20000
+print(f"Number of words to process = {MAX_WORDS_TO_PROCESS}")
+
+
 
 pos_mapping = {}
 
-# Iterate over all lexemes in vocab
+sorted_vocab = sorted(nlp.vocab.__iter__(), key=lambda x: x.prob, reverse=True)
+
 word_count = 0
-for l in nlp.vocab.__iter__() :
-    
-    if(word_count == MAX_WORDS) :
+for l in sorted_vocab :
+    if(word_count == MAX_WORDS_TO_PROCESS) :
         break
     
     word_count += 1
