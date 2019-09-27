@@ -1,7 +1,12 @@
 [
     {
-        "language" : "the NOUN_1_SINGULAR VERB_1_PAST the NOUN_2_SINGULAR",
-        "logic" : "Verb(Const1, VERB_1, NOUN_1, NOUN_2) AND VerbTense(Const1, Past)",
+        "language" : "the NOUN_1_NN VERB_1_VBN the NOUN_2_NN",
+        "logic" : "Verb ( Const1 , VERB_1 , NOUN_1 , NOUN_2 ) AND VerbTense ( Const1 , Past )",
         "type" : "statement"
+    },
+    {
+        "language" : "did the NOUN_1_NN VERB_1_VB the NOUN_2_NN",
+        "logic" : "Verb ( X , VERB_1 , NOUN_1 , NOUN_2 ) AND VerbTense ( X , Past )",
+        "type" : "question"
     }
 ]

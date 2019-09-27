@@ -1,0 +1,8 @@
+Verb ( X , procrastinate , gkmc , gkmc ) AND VerbTense ( X , Past )
+Verb ( X , frox , croup , eyebrow ) AND VerbTense ( X , Past )
+Verb ( X , procrastinate , carmo , subrace ) AND VerbTense ( X , Past )
+Verb ( X , juxtapose , firm , strength ) AND VerbTense ( X , Past )
+Verb ( X , procrastinate , yasukazu , cynwd ) AND VerbTense ( X , Past )
+Verb ( X , concentrate , rescuer , constructivist ) AND VerbTense ( X , Past )
+Verb ( X , initialize , mothering , pfau ) AND VerbTense ( X , Past )
+Verb ( Const1 , reconvert , eyebrow , drudgery ) AND VerbTense ( Const1 , Past )

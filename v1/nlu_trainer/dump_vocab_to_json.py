@@ -7,13 +7,12 @@
 # Load spacy model
 import spacy
 import json
+import re
 MODEL = "en_core_web_lg"
 nlp = spacy.load(MODEL)
 
-MAX_WORDS = 5000000000000
+MAX_WORDS = 1000
 
-# A dict where the key is part of speech, and the value is a list of objects, each being a word from the vocab
-# for that POS, and containing various elements of the word.
 pos_mapping = {}
 
 # Iterate over all lexemes in vocab
@@ -25,14 +24,19 @@ for l in nlp.vocab.__iter__() :
     
     word_count += 1
     
-    if(l.is_alpha and (not l.is_oov) and (not l.is_stop) and (not l.is_punct)) :
+    if(l.is_alpha and (not l.is_oov) and (not l.is_stop) and (not l.is_punct) and re.match(r"[a-zA-Z]+", l.text)) :
         doc = nlp(l.text) # Analyse. This won't be 100% accurate as we're just analysing one word but should be good enough!
         for token in doc :
-            
-            # Add this word to the dict, keyed by POS
             pos = token.pos_
-            if not pos in pos_mapping :
-                pos_mapping[pos] = []
-            pos_mapping[pos].append({'t':token.text,'l':token.lemma_,'p':token.pos_,'tg':token.tag_})
+            tag = token.tag_
             
-print(json.dumps(pos_mapping))
+            if not pos in pos_mapping :
+                pos_mapping[pos] = {}
+                
+            if not tag in pos_mapping[pos]:
+                pos_mapping[pos][tag] = []
+                
+            pos_mapping[pos][tag].append({'t':token.text,'l':token.lemma_,'p':token.pos_,'tg':token.tag_})
+            
+out_file = open("vocab.json", "w+")
+out_file.write(json.dumps(pos_mapping))
