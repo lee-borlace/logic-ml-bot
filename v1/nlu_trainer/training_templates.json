@@ -1,0 +1,7 @@
+[
+    {
+        "language" : "the NOUN_1_SINGULAR VERB_1_PAST the NOUN_2_SINGULAR",
+        "logic" : "Verb(Const1, VERB_1, NOUN_1, NOUN_2) AND VerbTense(Const1, Past)",
+        "type" : "statement"
+    }
+]
