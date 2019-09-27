@@ -31,8 +31,8 @@ with open('training_templates.json') as json_file:
 def generate_data(file_name_src, file_name_tgt, count):
     print(f"Generating {count} to {file_name_src} and {file_name_tgt}")
     
-    out_file_src = open(file_name_src, "w+")
-    out_file_tgt = open(file_name_tgt, "w+")
+    out_file_src = open(file_name_src, "w+", encoding="utf-8")
+    out_file_tgt = open(file_name_tgt, "w+", encoding="utf-8")
 
     for i in range(count-1) :
     
