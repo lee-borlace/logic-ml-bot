@@ -1,9 +1,9 @@
 import json
 import random
 
-NUM_SAMPLES = 50
+NUM_SAMPLES = 100000
 
-TRAIN_PERCENT = 0.8
+TRAIN_PERCENT = 0.7
 VAL_PERCENT = 1 - TRAIN_PERCENT
 TRAIN_COUNT = int(NUM_SAMPLES * TRAIN_PERCENT)
 VAL_COUNT = int(NUM_SAMPLES * VAL_PERCENT)
@@ -74,14 +74,12 @@ def generate_data(file_name_src, file_name_tgt, count):
                             if(len(vocab[pos][tag]) > 0) :
                                 rand_index = random.randrange(0, len(vocab[pos][tag]))
                                 rand_word = vocab[pos][tag][rand_index]['t']
-                                word_to_output = str(rand_word)
+                                word_to_output = str(rand_word).lower()
                                 
                                 # Store lemma
                                 word_dict[word_dict_key] = vocab[pos][tag][rand_index]['l']
                     
                 generated_language_string += word_to_output + " "
-            
-        print(word_dict)
             
         logic = template['logic'].strip()
         
@@ -96,7 +94,7 @@ def generate_data(file_name_src, file_name_tgt, count):
             
             if(pos_split and len(pos_split) == 2):
                 if(token in word_dict) :
-                    token_to_output = word_dict[token]
+                    token_to_output = word_dict[token].capitalize()
             
             generated_logic_string += token_to_output + " "
         

@@ -12,7 +12,7 @@ MODEL = "en_core_web_lg"
 nlp = spacy.load(MODEL)
 
 print(f"Total vocab count = {len(nlp.vocab)}") #1340242
-MAX_WORDS_TO_PROCESS = 20000
+MAX_WORDS_TO_PROCESS = 60000
 print(f"Number of words to process = {MAX_WORDS_TO_PROCESS}")
 
 
