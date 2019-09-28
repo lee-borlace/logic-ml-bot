@@ -21,6 +21,11 @@ TGT_VAL = "tgt-val.txt"
 SRC_TEST = "src-test.txt"
 TGT_TEST = "tgt-test.txt"
 
+# These let us add some random errors into the natural language training data to hopefully make it more robust
+RATE_WORD_ORDER_SWAP = 0.0001 # Randomly swap the order of any word with its predecessor
+RATE_WRONG_POS_TAG = 0.0001 # Randomly use the wrong POS tag e.g. eat instead of ate
+RATE_DROP_WORD = 0.00001 # Randomly drop a word from the training example
+
 random.seed()
 
 # load vocab from JSON
@@ -46,7 +51,11 @@ def generate_data(file_name_src, file_name_tgt, count):
         index = random.randrange(0, len(training_templates))
         template = training_templates[index]
         
-        # TODO : Do this cleanup more robustly.
+        # *************************************************
+        # Deal with language example
+        # *************************************************
+        
+        # TODO : Do this cleanup of punctuation more robustly.
         language = template['language'].strip()
         language = language.replace(',', '')
         language = language.replace('.', '')
@@ -54,9 +63,9 @@ def generate_data(file_name_src, file_name_tgt, count):
         language = language.replace(')', '')
         language = language.replace('-', '')
         
-        generated_language_string = ""
-        
         word_dict = {}
+        
+        generated_language_sequence = []
         
         for word in language.split(' '):
             word = word.strip()
@@ -93,8 +102,26 @@ def generate_data(file_name_src, file_name_tgt, count):
                                 # Store lemma in dict
                                 word_dict[word_dict_key] = vocab[pos][tag][rand_index]['l']
                     
-                generated_language_string += word_to_output + " "
+                generated_language_sequence.append(word_to_output)
+       
+        prev_token = ""
+        token_index = 0
+        for language_token in generated_language_sequence :
             
+            out_file_src.write(language_token)
+            
+            if token_index < len(generated_language_sequence)-1 :
+                out_file_src.write(" ")
+            
+            token_index += 1
+            prev_token = language_token
+        
+        out_file_src.write('\n')
+        
+        
+        # *************************************************
+        # Deal with logic example
+        # *************************************************        
         logic = template['logic'].strip()
         
         # Tokens to output
@@ -125,7 +152,7 @@ def generate_data(file_name_src, file_name_tgt, count):
                 
             generated_logic_sequence.append(token_to_output)
         
-        out_file_src.write(generated_language_string.strip() + '\n')
+        
         
         # Output the logic sequence
         prev_token = ""
