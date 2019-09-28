@@ -4,16 +4,21 @@ import random
 NUM_SAMPLES = 100000
 
 TRAIN_PERCENT = 0.7
-VAL_PERCENT = 1 - TRAIN_PERCENT
+VAL_PERCENT = 0.15
+TEST_PERCENT = 0.15
+
 TRAIN_COUNT = int(NUM_SAMPLES * TRAIN_PERCENT)
 VAL_COUNT = int(NUM_SAMPLES * VAL_PERCENT)
+TEST_COUNT = int(NUM_SAMPLES * TEST_PERCENT)
 
 SRC_TRAIN = "src-train.txt"
 TGT_TRAIN = "tgt-train.txt"
+
 SRC_VAL = "src-val.txt"
 TGT_VAL = "tgt-val.txt"
-SRC_VOCAB = "src-vocab.txt"
-TGT_VOCAB = "tgt-vocab.txt"
+
+SRC_TEST = "src-test.txt"
+TGT_TEST = "tgt-test.txt"
 
 random.seed()
 
@@ -102,10 +107,9 @@ def generate_data(file_name_src, file_name_tgt, count):
         out_file_tgt.write(generated_logic_string.strip() + '\n')
         
         
-        
-        
 generate_data(SRC_TRAIN, TGT_TRAIN, TRAIN_COUNT)
 generate_data(SRC_VAL, TGT_VAL, VAL_COUNT)
+generate_data(SRC_TEST, TGT_TEST, VAL_COUNT)
 
 print("DONE!")
     
