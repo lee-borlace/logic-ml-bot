@@ -97,7 +97,8 @@ def generate_data(file_name_src, file_name_tgt, count):
             
         logic = template['logic'].strip()
         
-        generated_logic_string = ""
+        # Tokens to output
+        generated_logic_sequence = []
         
         # pattern for splitting logic sentence
         REGEX_PATTERN = "([a-zA-Z0-9]+_[a-zA-Z0-9]+)|(AND)|(\()|(\))|(\s+)|(=>)|([a-zA-Z0-9]+)|(,)"
@@ -120,11 +121,26 @@ def generate_data(file_name_src, file_name_tgt, count):
                 for token in match:
                     if(token):
                         token_to_output = token
+                        break
                 
-            generated_logic_string += token_to_output
+            generated_logic_sequence.append(token_to_output)
         
         out_file_src.write(generated_language_string.strip() + '\n')
-        out_file_tgt.write(generated_logic_string.strip() + '\n')
+        
+        # Output the logic sequence
+        prev_token = ""
+        for logic_token in generated_logic_sequence :
+            # Make sure each token is separated from the previous one with a space
+            if prev_token:
+                if( (not prev_token.endswith(" ")) and (not prev_token.endswith("\t"))):
+                    out_file_tgt.write(" ")
+            
+            out_file_tgt.write(logic_token)
+            
+            prev_token = logic_token
+            
+        # Finish the logic line with a newline
+        out_file_tgt.write('\n')
         
         
 generate_data(SRC_TRAIN, TGT_TRAIN, TRAIN_COUNT)
