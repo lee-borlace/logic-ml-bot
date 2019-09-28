@@ -1,17 +1,17 @@
 [
     {
         "language" : "the NOUN_1_NN VERB_1_VBN the NOUN_2_NN",
-        "logic" : "Verb ( Const1 , VERB_1 , Const2 , Const3 ) AND VerbTense ( Const1 , Past ) AND Instance ( Const2 , NOUN_1 ) AND Instance ( Const3 , NOUN_2 )",
+        "logic" : "Verb(Const1, VERB_1, Const2, Const3) AND VerbTense(Const1, Past) AND Instance(Const2, NOUN_1) AND Instance(Const3, NOUN_2)",
         "type" : "statement"
     },
     {
         "language" : "did the NOUN_1_NN VERB_1_VB the NOUN_2_NN",
-        "logic" : "Verb ( x , VERB_1 , y , z ) AND VerbTense ( x , Past ) AND Instance ( y , NOUN_1 ) AND Instance ( z , NOUN_2 )",
+        "logic" : "Verb(x, VERB_1, y, z) AND VerbTense(x, Past) AND Instance(y, NOUN_1) AND Instance(z, NOUN_2)",
         "type" : "question"
     },
     {
         "language" : "the NOUN_1_NN was ADV_1_RB ADJ_1_JJ",
-        "logic" : "Adjective ( Const1 , Const2 , ADJ_1 ) AND Instance ( Const2 , NOUN_1 ) AND Adverb ( Const1 , ADV_1 )",
+        "logic" : "Adjective(Const1 ,Const2, ADJ_1) AND Instance(Const2, NOUN_1) AND Adverb(Const1, ADV_1)",
         "type" : "statement"
     }
 ]

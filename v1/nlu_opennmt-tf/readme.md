@@ -1,6 +1,8 @@
-# Getting it running - quick start
+# Info
 http://opennmt.net/OpenNMT-tf/quickstart.html
+https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md
 
+# Getting it running - quick start
 `conda activate OpenNMT-tf`
 `onmt-build-vocab --size 50000 --save_vocab src-vocab.txt src-train.txt`
 `onmt-build-vocab --size 50000 --save_vocab tgt-vocab.txt tgt-train.txt`

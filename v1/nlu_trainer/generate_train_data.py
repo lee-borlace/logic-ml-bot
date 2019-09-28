@@ -1,7 +1,8 @@
 import json
 import random
+import re
 
-NUM_SAMPLES = 100000
+NUM_SAMPLES = 1000
 
 TRAIN_PERCENT = 0.7
 VAL_PERCENT = 0.15
@@ -60,28 +61,36 @@ def generate_data(file_name_src, file_name_tgt, count):
         for word in language.split(' '):
             word = word.strip()
             
+            # By default we'll just output the word, unless it turns out to be a POS later
             word_to_output = word
             
             if(word):
-                #check if word contains POS
+                #check if word contains POS (i.e. it has "_" in it e.g. NOUN_1_NN)
                 pos_split = word.split('_')
                 
-                # Is a POS token - generate random permutation 
+                # Is a POS token if it contains 3 elements when splitting on "_" - generate random permutation 
                 if(pos_split and len(pos_split) == 3):
+                    
+                    # Split up based on template NOUN_1_NN
                     pos = pos_split[0]
                     index = pos_split[1]
                     tag = pos_split[2]
                     
+                    # We will store the lemma of the word in a dict where the key is for example just NOUN_1
                     word_dict_key = f"{pos}_{index}"
                     
+                    # We have the POS in the vocab dict
                     if(pos in vocab) :
+                        # We have the tag in the vocab dict against the POS
                         if(tag in vocab[pos]) :
+                            # There is at least 1 word against the POS and tag
                             if(len(vocab[pos][tag]) > 0) :
+                                # Pick a random word from the list for the POS + tag
                                 rand_index = random.randrange(0, len(vocab[pos][tag]))
                                 rand_word = vocab[pos][tag][rand_index]['t']
                                 word_to_output = str(rand_word).lower()
                                 
-                                # Store lemma
+                                # Store lemma in dict
                                 word_dict[word_dict_key] = vocab[pos][tag][rand_index]['l']
                     
                 generated_language_string += word_to_output + " "
@@ -90,18 +99,29 @@ def generate_data(file_name_src, file_name_tgt, count):
         
         generated_logic_string = ""
         
-        for token in logic.split(' '): # TODO : split on something other than space!
-            token = token.strip()
+        # pattern for splitting logic sentence
+        REGEX_PATTERN = "([a-zA-Z0-9]+_[a-zA-Z0-9]+)|(AND)|(\()|(\))|(\s+)|(=>)|([a-zA-Z0-9]+)|(,)"
+        
+        matches = re.findall(REGEX_PATTERN, logic)
+        
+        # Iterate through matches
+        for match in matches:
             
-            token_to_output = token
-            
-            pos_split = token.split('_')
-            
-            if(pos_split and len(pos_split) == 2):
+            # If the first element of the is present then we have a POS, so try to match it back
+            if(match[0]) :
+                token = match[0].strip()
+
                 if(token in word_dict) :
                     token_to_output = word_dict[token].capitalize()
-            
-            generated_logic_string += token_to_output + " "
+
+            # Else not present - we don't have a POS, so just search for the first element of the match which
+            # is present and output that
+            else:
+                for token in match:
+                    if(token):
+                        token_to_output = token
+                
+            generated_logic_string += token_to_output
         
         out_file_src.write(generated_language_string.strip() + '\n')
         out_file_tgt.write(generated_logic_string.strip() + '\n')

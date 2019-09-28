@@ -7,3 +7,6 @@ data:
   eval_labels_file: tgt-val.txt
   source_words_vocabulary: src-vocab.txt
   target_words_vocabulary: tgt-vocab.txt
+
+source_tokenization:
+    mode: aggressive
