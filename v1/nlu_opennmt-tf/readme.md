@@ -5,15 +5,18 @@ This folder is for doing a test of english > logic via opennmt-tf
 http://opennmt.net/OpenNMT-tf/quickstart.html
 https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md
 
-# Getting it running - quick start
-`conda activate OpenNMT-tf`
+# Generating training data
+`python ..\nlu_training_data_generator\generate_train_data.py 100000 0.7 0.15 0.15 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json`
+
 `onmt-build-vocab --size 50000 --save_vocab src-vocab.txt src-train.txt`
 `onmt-build-vocab --size 50000 --save_vocab tgt-vocab.txt tgt-train.txt`
 
 # Training
-`onmt-main train_and_eval --model_type NMTSmall --auto_config --config data.yml`
-
+`onmt-main train_and_eval --model_type NMTSmall --auto_config --config NMTSmall.yml`
 `tensorboard --logdir="run"` - have to hit at localhost:6006
+
+# Inferring
+`python infer.py C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_opennmt-tf\run\export\latest\1569615087`
 
 # Export issue
 Was getting this in the process :
@@ -21,5 +24,3 @@ Was getting this in the process :
 
 Seems to be fixed by using `model_dir: run` instead of `model_dir: run\` in data.yml
 
-# Inferring
-`onmt-main infer --auto_config --config data.yml --features_file src-test.txt > tgt-test-temp.txt`

@@ -10,13 +10,27 @@ from opennmt.utils import losses
 from opennmt.utils import misc
 from opennmt.utils import optim
 
+import sys
+
 mode = tf.estimator.ModeKeys.PREDICT
 
-EXPORT_DIR = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_opennmt-tf\\run\\export\\latest\\1569615087"
+EXPORT_DIR_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_opennmt-tf\\run\\export\\latest\\1569615087"
+
+def show_usage():
+    print("Runs the specified model interactively.")
+    print()
+    print("Usage :")
+    print()
+    print("python.exe infer_test.py EXPORT_DIR_PATH")
+    exit()
+
+if(len(sys.argv) > 1):
+    if(len(sys.argv) == 2):
+        EXPORT_DIR_PATH = str(sys.argv[1])
 
 with tf.Session() as sess:
     meta_graph_def = tf.saved_model.loader.load(
-        sess, [tf.saved_model.tag_constants.SERVING], EXPORT_DIR)
+        sess, [tf.saved_model.tag_constants.SERVING], EXPORT_DIR_PATH)
     
     signature_def = meta_graph_def.signature_def["serving_default"]
 
@@ -25,8 +39,10 @@ with tf.Session() as sess:
     output_tokens = signature_def.outputs["tokens"].name
     output_length = signature_def.outputs["length"].name
 
+    print("\exit or \quit to exit")
+
     while True:
-        text = input("Input>")
+        text = input("Input > ")
         
         if(text == "\exit" or text == "\quit"):
             break
@@ -53,6 +69,6 @@ with tf.Session() as sess:
                 
             translation = translation.strip()
            
-            print(translation)
+            print("Input > " + translation)
         
         
