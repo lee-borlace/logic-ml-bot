@@ -1,0 +1,2 @@
+# Intro
+this folder contains Python scripts to take our example templates and generate training data from them. See `generate_train_data.py`. You can generate the vocab.json that script needs via `dump_vocab_to_json.py`.

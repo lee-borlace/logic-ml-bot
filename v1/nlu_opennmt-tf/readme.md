@@ -1,3 +1,6 @@
+# Intro
+This folder is for doing a test of english > logic via opennmt-tf
+
 # Info
 http://opennmt.net/OpenNMT-tf/quickstart.html
 https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md

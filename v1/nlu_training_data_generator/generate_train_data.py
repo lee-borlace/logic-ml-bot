@@ -46,7 +46,7 @@ def generate_data(file_name_src, file_name_tgt, count):
         index = random.randrange(0, len(training_templates))
         template = training_templates[index]
         
-        # TODO : Do this more robustly.
+        # TODO : Do this cleanup more robustly.
         language = template['language'].strip()
         language = language.replace(',', '')
         language = language.replace('.', '')
