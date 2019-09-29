@@ -26,11 +26,27 @@ namespace NluTrainerDotNet.Model
         /// </summary>
         public string TokenForLanguage { get; set; }
 
+        public string TokenForLanguageForButton
+        {
+            get
+            {
+                return TokenForLanguage.Replace("_", "__");
+            }
+        }
+
         /// <summary>
         /// Token to be used for logic example, containing POS and index, but no tag. E.g. NOUN_3
         /// </summary>
         public string TokenForLogic { get; set; }
 
-        
+        public string TokenForLogicForButton
+        {
+            get
+            {
+                return TokenForLogic.Replace("_", "__");
+            }
+        }
+
+
     }
 }

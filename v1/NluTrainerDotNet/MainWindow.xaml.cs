@@ -254,62 +254,87 @@ namespace NluTrainerDotNet
 
         private void BtnConst1_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("Const1");
+            InsertToSelectedTextBox("Const1, ");
         }
 
         private void BtnConst2_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("Const2");
+            InsertToSelectedTextBox("Const2, ");
         }
 
         private void BtnConst3_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("Const3");
+            InsertToSelectedTextBox("Const3, ");
         }
 
         private void BtnConst4_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("Const4");
+            InsertToSelectedTextBox("Const4, ");
         }
 
         private void BtnConst5_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("Const5");
+            InsertToSelectedTextBox("Const5, ");
         }
 
         private void BtnConst6_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("Const6");
+            InsertToSelectedTextBox("Const6, ");
         }
 
         private void BtnX_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("x");
+            InsertToSelectedTextBox("x, ");
         }
 
         private void BtnY_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("y");
+            InsertToSelectedTextBox("y, ");
         }
 
         private void BtnZ_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("z");
+            InsertToSelectedTextBox("z, ");
         }
 
         private void BtnA_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("a");
+            InsertToSelectedTextBox("a, ");
         }
 
         private void BtnB_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("b");
+            InsertToSelectedTextBox("b, ");
         }
 
         private void BtnC_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("c");
+            InsertToSelectedTextBox("c, ");
+        }
+
+        private void BtnInstance_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Instance(");
+        }
+
+        private void BtnVerb_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Verb(");
+        }
+
+        private void BtnAdverb_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Adverb(");
+        }
+
+        private void BtnVerbTense_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("VerbTense(");
+        }
+
+        private void BtnAdjective_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Adjective(");
         }
 
         void InsertToSelectedTextBox(string textToInsert, bool mayHaveSpaceBefore = true)
@@ -333,12 +358,34 @@ namespace NluTrainerDotNet
                     indexToInsertInto = _caretIndexLogic;
                 }
 
+                if(textToInsert == ") ")
+                {
+                    if (textBox.Text.Length >= 2 && textBox.Text.EndsWith(", "))
+                    {
+                        textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 2);
+                    }
+
+                    if (textBox.Text.Length >= 2 && textBox.Text.EndsWith(", "))
+                    {
+                        textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
+                    }
+
+                    if (textBox.Text.Length >= 1 && textBox.Text.EndsWith(","))
+                    {
+                        textBox.Text = textBox.Text.Substring(0, textBox.Text.Length);
+                    }
+                }
+
+
+
                 var origCaratIndex = indexToInsertInto;
 
                 if (!mayHaveSpaceBefore)
                 {
                     textBox.Text.TrimEnd();
                 }
+
+                indexToInsertInto = Math.Min(indexToInsertInto, textBox.Text.Length);
 
                 if (textBox.Text.Length > 0)
                 {
@@ -443,7 +490,7 @@ namespace NluTrainerDotNet
                         var row = (DataGridRow)vis;
                         var token = row.DataContext as NlpToken;
 
-                        InsertToSelectedTextBox(token.TokenForLogic + " ");
+                        InsertToSelectedTextBox(token.TokenForLogic + ", ");
 
                         break;
                     }
@@ -456,5 +503,7 @@ namespace NluTrainerDotNet
         }
 
         #endregion
+
+
     }
 }
