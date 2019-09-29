@@ -3,6 +3,7 @@ using NluTrainerDotNet.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -75,7 +76,7 @@ namespace NluTrainerDotNet
 
         private void SetUpShortcutButtons()
         {
-            
+
         }
 
         private void HandleAnalysisResponse(string analysedJson)
@@ -223,7 +224,7 @@ namespace NluTrainerDotNet
 
         private void BtnRightBracket_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox(") ",false);
+            InsertToSelectedTextBox(") ", false);
         }
 
         private void BtnImplies_Click(object sender, RoutedEventArgs e)
@@ -352,7 +353,103 @@ namespace NluTrainerDotNet
 
                 textBox.CaretIndex = origCaratIndex + textToInsert.Length;
             }
-            catch(Exception ex )
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+        #endregion
+
+        #region  Data grid
+
+        private void DgAddText(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                {
+                    if (vis is DataGridRow)
+                    {
+                        var row = (DataGridRow)vis;
+                        var token = row.DataContext as NlpToken;
+
+                        InsertToSelectedTextBox(token.Text + " ");
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+        private void DgAddLemma(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                {
+                    if (vis is DataGridRow)
+                    {
+                        var row = (DataGridRow)vis;
+                        var token = row.DataContext as NlpToken;
+
+                        InsertToSelectedTextBox(token.Lemma + " ");
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+        private void DgAddLanguageToken(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                {
+                    if (vis is DataGridRow)
+                    {
+                        var row = (DataGridRow)vis;
+                        var token = row.DataContext as NlpToken;
+
+                        InsertToSelectedTextBox(token.TokenForLanguage + " ");
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+        private void DgAddLogicToken(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                {
+                    if (vis is DataGridRow)
+                    {
+                        var row = (DataGridRow)vis;
+                        var token = row.DataContext as NlpToken;
+
+                        InsertToSelectedTextBox(token.TokenForLogic + " ");
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
             {
                 Log(ex);
             }

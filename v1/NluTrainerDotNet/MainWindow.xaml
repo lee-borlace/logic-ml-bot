@@ -46,13 +46,36 @@
         <Grid>
             <DataGrid x:Name="dgTokens" HorizontalAlignment="Left" Height="177" Margin="978,298,0,0" VerticalAlignment="Top" Width="426" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Text" Binding="{Binding Text}"/>
-                    <DataGridTextColumn Header="Lemma" Binding="{Binding Lemma}"/>
-                    <DataGridTextColumn Header="Language Token" Binding="{Binding TokenForLanguage}"/>
-                    <DataGridTextColumn Header="Logic Token" Binding="{Binding TokenForLogic}"/>
+                    <DataGridTemplateColumn Header="Text">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDgAddText" Content="{Binding Text}" Click="DgAddText" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Lemma">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDgAddText" Content="{Binding Lemma}" Click="DgAddLemma" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Language Token">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDgAddText" Content="{Binding TokenForLanguage}" Click="DgAddLanguageToken" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Logic Token">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDgAddText" Content="{Binding TokenForLogic}" Click="DgAddLogicToken" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-
     </Grid>
 </Window>
