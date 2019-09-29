@@ -30,5 +30,7 @@ namespace NluTrainerDotNet.Model
         /// Token to be used for logic example, containing POS and index, but no tag. E.g. NOUN_3
         /// </summary>
         public string TokenForLogic { get; set; }
+
+        
     }
 }

@@ -9,37 +9,50 @@
     <Grid>
         <TextBox x:Name="txtInput" HorizontalAlignment="Left" Height="20" Margin="20,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="688"/>
         <Button x:Name="btnAnalyse" Content="Analyse" HorizontalAlignment="Left" Margin="727,45,0,0" VerticalAlignment="Top" Width="75" Click="BtnAnalyse_Click"/>
-        <TextBox x:Name="txtOutput" HorizontalAlignment="Left" Height="40" Margin="20,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1031"/>
+        <TextBox x:Name="txtOutput" HorizontalAlignment="Left" Height="40" Margin="20,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="908"/>
         <Label Content="Text to analyse" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
         <Label Content="Analysis output&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Height="28"/>
         <Label Content="Example Language&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,143,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtExampleLanguage" HorizontalAlignment="Left" Height="65" Margin="20,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1031" PreviewMouseLeftButtonDown ="TxtExampleLanguage_MouseLeftButtonDown"/>
+        <TextBox x:Name="txtExampleLanguage" HorizontalAlignment="Left" Height="65" Margin="20,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="908" PreviewMouseLeftButtonDown ="TxtExampleLanguage_MouseLeftButtonDown"/>
         <Label Content="Example Logic&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,241,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Left" Height="66" Margin="20,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1031" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
+        <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Left" Height="66" Margin="20,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="908" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
         <Label Content="Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,353,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.006,0.39"/>
         <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" Margin="20,395,0,0" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
-        <Label Content="Log" HorizontalAlignment="Left" Margin="20,723,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtLog" HorizontalAlignment="Left" Height="103" Margin="20,754,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1378" Focusable="False"/>
+        <Label Content="Log" HorizontalAlignment="Left" Margin="20,630,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtLog" HorizontalAlignment="Left" Height="184" Margin="20,673,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1378" Focusable="False"/>
         <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,395,0,0" VerticalAlignment="Top" Width="118" RenderTransformOrigin="-0.161,0.419" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
-        <Label Content="Logic Elements&#xD;&#xA;" HorizontalAlignment="Left" Margin="1084,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.069,-0.537" Height="33"/>
-        <Button x:Name="btnLeftBracket" Content="(" HorizontalAlignment="Left" Margin="1084,70,0,0" VerticalAlignment="Top" Width="38" Click="BtnLeftBracket_Click"/>
-        <Button x:Name="btnRightBracket" Content=")" HorizontalAlignment="Left" Margin="1135,70,0,0" VerticalAlignment="Top" Width="38" Click="BtnRightBracket_Click"/>
-        <Button x:Name="btnImplies" Content="=&gt;" HorizontalAlignment="Left" Margin="1191,70,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnImplies_Click"/>
-        <Button x:Name="btnComma" Content="," HorizontalAlignment="Left" Margin="1246,70,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnComma_Click"/>
-        <Button x:Name="btnAnd" Content="AND" HorizontalAlignment="Left" Margin="1084,108,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnAnd_Click"/>
-        <Button x:Name="btnOr" Content="OR" HorizontalAlignment="Left" Margin="1135,108,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnOr_Click"/>
-        <Button x:Name="btnNot" Content="NOT" HorizontalAlignment="Left" Margin="1191,108,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnNot_Click"/>
-        <Button x:Name="btnConst1" Content="Const1" HorizontalAlignment="Left" Margin="1084,146,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst1_Click"/>
-        <Button x:Name="btnConst2" Content="Const2" HorizontalAlignment="Left" Margin="1142,146,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst2_Click"/>
-        <Button x:Name="btnConst3" Content="Const3" HorizontalAlignment="Left" Margin="1200,146,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst3_Click"/>
-        <Button x:Name="btnConst4" Content="Const4" HorizontalAlignment="Left" Margin="1258,146,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="3.879,0.607" Click="BtnConst4_Click"/>
-        <Button x:Name="btnConst5" Content="Const5" HorizontalAlignment="Left" Margin="1084,170,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="0.687,2.14" Click="BtnConst5_Click"/>
-        <Button x:Name="btnConst6" Content="Const6" HorizontalAlignment="Left" Margin="1142,170,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst6_Click"/>
-        <Button x:Name="btnX" Content="x" HorizontalAlignment="Left" Margin="1084,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnX_Click"/>
-        <Button x:Name="btnY" Content="y" HorizontalAlignment="Left" Margin="1135,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnY_Click"/>
-        <Button x:Name="btnZ" Content="z" HorizontalAlignment="Left" Margin="1191,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnZ_Click"/>
-        <Button x:Name="btnA" Content="a" HorizontalAlignment="Left" Margin="1246,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnA_Click"/>
-        <Button x:Name="btnB" Content="b" HorizontalAlignment="Left" Margin="1299,205,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnB_Click"/>
-        <Button x:Name="btnC" Content="c" HorizontalAlignment="Left" Margin="1360,205,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnC_Click"/>
+        <Label Content="Logic Elements&#xD;&#xA;" HorizontalAlignment="Left" Margin="978,29,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.069,-0.537" Height="33"/>
+        <Button x:Name="btnLeftBracket" Content="(" HorizontalAlignment="Left" Margin="978,81,0,0" VerticalAlignment="Top" Width="38" Click="BtnLeftBracket_Click"/>
+        <Button x:Name="btnRightBracket" Content=")" HorizontalAlignment="Left" Margin="1029,81,0,0" VerticalAlignment="Top" Width="38" Click="BtnRightBracket_Click"/>
+        <Button x:Name="btnImplies" Content="=&gt;" HorizontalAlignment="Left" Margin="1085,81,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnImplies_Click"/>
+        <Button x:Name="btnComma" Content="," HorizontalAlignment="Left" Margin="1140,81,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnComma_Click"/>
+        <Button x:Name="btnAnd" Content="AND" HorizontalAlignment="Left" Margin="978,119,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnAnd_Click"/>
+        <Button x:Name="btnOr" Content="OR" HorizontalAlignment="Left" Margin="1029,119,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnOr_Click"/>
+        <Button x:Name="btnNot" Content="NOT" HorizontalAlignment="Left" Margin="1085,119,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnNot_Click"/>
+        <Button x:Name="btnConst1" Content="Const1" HorizontalAlignment="Left" Margin="978,157,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst1_Click"/>
+        <Button x:Name="btnConst2" Content="Const2" HorizontalAlignment="Left" Margin="1036,157,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst2_Click"/>
+        <Button x:Name="btnConst3" Content="Const3" HorizontalAlignment="Left" Margin="1094,157,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst3_Click"/>
+        <Button x:Name="btnConst4" Content="Const4" HorizontalAlignment="Left" Margin="1152,157,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="3.879,0.607" Click="BtnConst4_Click"/>
+        <Button x:Name="btnConst5" Content="Const5" HorizontalAlignment="Left" Margin="978,181,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="0.687,2.14" Click="BtnConst5_Click"/>
+        <Button x:Name="btnConst6" Content="Const6" HorizontalAlignment="Left" Margin="1036,181,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst6_Click"/>
+        <Button x:Name="btnX" Content="x" HorizontalAlignment="Left" Margin="978,216,0,0" VerticalAlignment="Top" Width="38" Click="BtnX_Click"/>
+        <Button x:Name="btnY" Content="y" HorizontalAlignment="Left" Margin="1029,216,0,0" VerticalAlignment="Top" Width="38" Click="BtnY_Click"/>
+        <Button x:Name="btnZ" Content="z" HorizontalAlignment="Left" Margin="1085,216,0,0" VerticalAlignment="Top" Width="38" Click="BtnZ_Click"/>
+        <Button x:Name="btnA" Content="a" HorizontalAlignment="Left" Margin="1140,216,0,0" VerticalAlignment="Top" Width="38" Click="BtnA_Click"/>
+        <Button x:Name="btnB" Content="b" HorizontalAlignment="Left" Margin="1193,216,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnB_Click"/>
+        <Button x:Name="btnC" Content="c" HorizontalAlignment="Left" Margin="1254,216,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnC_Click"/>
+        <Label Content="Tokens" HorizontalAlignment="Left" Margin="978,257,0,0" VerticalAlignment="Top"/>
+
+        <Grid>
+            <DataGrid x:Name="dgTokens" HorizontalAlignment="Left" Height="177" Margin="978,298,0,0" VerticalAlignment="Top" Width="426" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Text" Binding="{Binding Text}"/>
+                    <DataGridTextColumn Header="Lemma" Binding="{Binding Lemma}"/>
+                    <DataGridTextColumn Header="Language Token" Binding="{Binding TokenForLanguage}"/>
+                    <DataGridTextColumn Header="Logic Token" Binding="{Binding TokenForLogic}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
     </Grid>
 </Window>

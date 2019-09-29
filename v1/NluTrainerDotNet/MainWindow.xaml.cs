@@ -2,6 +2,7 @@
 using NluTrainerDotNet.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -109,6 +110,8 @@ namespace NluTrainerDotNet
                     token.TokenForLanguage = $"{pos}_{posCountDict[pos]}_{tag}";
                     token.TokenForLogic = $"{pos}_{posCountDict[pos]}";
                 }
+
+                dgTokens.ItemsSource = _tokensFromLastAnalysis;
             }
             catch (Exception ex)
             {
@@ -218,8 +221,6 @@ namespace NluTrainerDotNet
             InsertToSelectedTextBox("(", false);
         }
 
-        
-
         private void BtnRightBracket_Click(object sender, RoutedEventArgs e)
         {
             InsertToSelectedTextBox(") ",false);
@@ -310,7 +311,7 @@ namespace NluTrainerDotNet
             InsertToSelectedTextBox("c");
         }
 
-        void InsertToSelectedTextBox(string textToInsert, bool spaceBefore = true)
+        void InsertToSelectedTextBox(string textToInsert, bool mayHaveSpaceBefore = true)
         {
             try
             {
@@ -333,7 +334,7 @@ namespace NluTrainerDotNet
 
                 var origCaratIndex = indexToInsertInto;
 
-                if (!spaceBefore)
+                if (!mayHaveSpaceBefore)
                 {
                     textBox.Text.TrimEnd();
                 }
