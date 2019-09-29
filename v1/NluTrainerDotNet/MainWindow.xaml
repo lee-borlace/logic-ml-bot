@@ -5,11 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NluTrainerDotNet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="529.276">
+        Title="NLU Trainer" Height="914.714" Width="1431.728">
     <Grid>
-        <TextBox x:Name="txtInput" HorizontalAlignment="Left" Height="107" Margin="20,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Text="the dog ate the cat"/>
-        <Button x:Name="btnAnalyse" Content="Analyse" HorizontalAlignment="Left" Margin="414,20,0,0" VerticalAlignment="Top" Width="75" Click="BtnAnalyse_Click"/>
-        <TextBox x:Name="txtOutput" HorizontalAlignment="Left" Height="93" Margin="20,152,0,0" TextWrapping="Wrap" Text="Output will go here..." VerticalAlignment="Top" Width="482"/>
+        <TextBox x:Name="txtInput" HorizontalAlignment="Left" Height="20" Margin="20,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="688"/>
+        <Button x:Name="btnAnalyse" Content="Analyse" HorizontalAlignment="Left" Margin="727,45,0,0" VerticalAlignment="Top" Width="75" Click="BtnAnalyse_Click"/>
+        <TextBox x:Name="txtOutput" HorizontalAlignment="Left" Height="40" Margin="20,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1031"/>
+        <Label Content="Text to analyse" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Analysis output&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Height="28"/>
+        <Label Content="Example Language&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,143,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtExampleLanguage" HorizontalAlignment="Left" Height="65" Margin="20,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1031" PreviewMouseLeftButtonDown ="TxtExampleLanguage_MouseLeftButtonDown"/>
+        <Label Content="Example Logic&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,241,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Left" Height="66" Margin="20,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1031" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
+        <Label Content="Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,353,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.006,0.39"/>
+        <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" Margin="20,395,0,0" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
 
     </Grid>
 </Window>

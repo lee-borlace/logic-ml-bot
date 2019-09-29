@@ -9,10 +9,6 @@ TRAIN_PERCENT = 0.7
 VAL_PERCENT = 0.15
 TEST_PERCENT = 0.15
 
-TRAIN_COUNT = int(NUM_SAMPLES * TRAIN_PERCENT)
-VAL_COUNT = int(NUM_SAMPLES * VAL_PERCENT)
-TEST_COUNT = int(NUM_SAMPLES * TEST_PERCENT)
-
 SRC_TRAIN = "src-train.txt"
 TGT_TRAIN = "tgt-train.txt"
 
@@ -55,6 +51,10 @@ if(len(sys.argv) > 1):
             show_usage()
     else:
         show_usage()
+
+TRAIN_COUNT = int(NUM_SAMPLES * TRAIN_PERCENT)
+VAL_COUNT = int(NUM_SAMPLES * VAL_PERCENT)
+TEST_COUNT = int(NUM_SAMPLES * TEST_PERCENT)
     
 random.seed()
 
