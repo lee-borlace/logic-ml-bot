@@ -36,6 +36,9 @@ namespace NluTrainerDotNet
         private List<TrainingExampleTemplate> _exampleTemplates;
         private LastFocusedControl _lastFocusedControl = LastFocusedControl.Language;
 
+        private int _caretIndexLanguage = 0;
+        private int _caretIndexLogic = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -64,8 +67,14 @@ namespace NluTrainerDotNet
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 HandleAnalysisResponse(analysedJson);
+                SetUpShortcutButtons();
             }));
 
+        }
+
+        private void SetUpShortcutButtons()
+        {
+            
         }
 
         private void HandleAnalysisResponse(string analysedJson)
@@ -77,8 +86,31 @@ namespace NluTrainerDotNet
             try
             {
                 _tokensFromLastAnalysis = JsonConvert.DeserializeObject<List<NlpToken>>(analysedJson);
+
+                // Keep track of index of each POS encountered.
+                var posCountDict = new Dictionary<string, int>();
+
+                // Set up tokens so they can be used by language and logic examples.
+                foreach (var token in _tokensFromLastAnalysis)
+                {
+                    var pos = token.Pos;
+                    var tag = token.Tag;
+
+                    if (!posCountDict.ContainsKey(pos))
+                    {
+                        posCountDict[pos] = 1;
+                    }
+                    else
+                    {
+                        posCountDict[pos]++;
+                    }
+
+                    // Remember, 1-based index!
+                    token.TokenForLanguage = $"{pos}_{posCountDict[pos]}_{tag}";
+                    token.TokenForLogic = $"{pos}_{posCountDict[pos]}";
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log(ex);
                 return;
@@ -104,8 +136,7 @@ namespace NluTrainerDotNet
 
         private void BtnLoadTemplates_Click(object sender, RoutedEventArgs e)
         {
-            var thread = new Thread(LoadTemplates);
-            thread.Start();
+            LoadTemplates();
         }
 
         private void LoadTemplates()
@@ -117,16 +148,15 @@ namespace NluTrainerDotNet
 
                 using (StreamReader file = File.OpenText(TemplatePath))
                 {
-                    
-
-
                     JsonSerializer serializer = new JsonSerializer();
                     _exampleTemplates = (List<TrainingExampleTemplate>)serializer.Deserialize(file, typeof(List<TrainingExampleTemplate>));
                     Log($"Loaded {_exampleTemplates.Count} templates");
                     Log($"Backed up old templates to {backedUpFileName}.");
+
+                    btnSaveTemplates.IsEnabled = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log(ex);
             }
@@ -134,12 +164,20 @@ namespace NluTrainerDotNet
 
         private void TxtExampleLanguage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            UpdateCaretIndexes();
             _lastFocusedControl = LastFocusedControl.Language;
         }
 
         private void TxtExampleLogic_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            UpdateCaretIndexes();
             _lastFocusedControl = LastFocusedControl.Logic;
+        }
+
+        private void UpdateCaretIndexes()
+        {
+            _caretIndexLanguage = txtExampleLanguage.CaretIndex;
+            _caretIndexLogic = txtExampleLogic.CaretIndex;
         }
 
         private void Log(string msg)
@@ -161,9 +199,9 @@ namespace NluTrainerDotNet
             }));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonSaveTemplates_Click(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Save Templates", System.Windows.MessageBoxButton.YesNo);
+            var messageBoxResult = System.Windows.MessageBox.Show("Overwrite templates?", "Save Templates", System.Windows.MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -172,5 +210,153 @@ namespace NluTrainerDotNet
                 Log("Templates saved.");
             }
         }
+
+        #region Insert buttons
+
+        private void BtnLeftBracket_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("(", false);
+        }
+
+        
+
+        private void BtnRightBracket_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox(") ",false);
+        }
+
+        private void BtnImplies_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("=> ");
+        }
+
+        private void BtnComma_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox(", ", false);
+        }
+
+        private void BtnAnd_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("AND ");
+        }
+
+        private void BtnOr_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("OR ");
+        }
+
+        private void BtnNot_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("NOT ");
+        }
+
+        private void BtnConst1_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Const1");
+        }
+
+        private void BtnConst2_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Const2");
+        }
+
+        private void BtnConst3_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Const3");
+        }
+
+        private void BtnConst4_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Const4");
+        }
+
+        private void BtnConst5_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Const5");
+        }
+
+        private void BtnConst6_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("Const6");
+        }
+
+        private void BtnX_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("x");
+        }
+
+        private void BtnY_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("y");
+        }
+
+        private void BtnZ_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("z");
+        }
+
+        private void BtnA_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("a");
+        }
+
+        private void BtnB_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("b");
+        }
+
+        private void BtnC_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox("c");
+        }
+
+        void InsertToSelectedTextBox(string textToInsert, bool spaceBefore = true)
+        {
+            try
+            {
+                UpdateCaretIndexes();
+
+                TextBox textBox;
+
+                var indexToInsertInto = 0;
+
+                if (_lastFocusedControl == LastFocusedControl.Language)
+                {
+                    textBox = txtExampleLanguage;
+                    indexToInsertInto = _caretIndexLanguage;
+                }
+                else
+                {
+                    textBox = txtExampleLogic;
+                    indexToInsertInto = _caretIndexLogic;
+                }
+
+                var origCaratIndex = indexToInsertInto;
+
+                if (!spaceBefore)
+                {
+                    textBox.Text.TrimEnd();
+                }
+
+                if (textBox.Text.Length > 0)
+                {
+                    var textBeforeInsert = textBox.Text.Substring(0, indexToInsertInto);
+                    var textAfterInsert = textBox.Text.Substring(indexToInsertInto);
+                    textBox.Text = textBeforeInsert + textToInsert + textAfterInsert;
+                }
+                else
+                {
+                    textBox.Text = textToInsert;
+                }
+
+                textBox.CaretIndex = origCaratIndex + textToInsert.Length;
+            }
+            catch(Exception ex )
+            {
+                Log(ex);
+            }
+        }
+
+        #endregion
     }
 }

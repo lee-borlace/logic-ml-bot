@@ -20,5 +20,15 @@ namespace NluTrainerDotNet.Model
 
         [JsonProperty("tg")]
         public string Tag { get; set; }
+
+        /// <summary>
+        /// Token to be used for language example, containing POS, index and tag, separated by underscore, e.g. NOUN_3_NN
+        /// </summary>
+        public string TokenForLanguage { get; set; }
+
+        /// <summary>
+        /// Token to be used for logic example, containing POS and index, but no tag. E.g. NOUN_3
+        /// </summary>
+        public string TokenForLogic { get; set; }
     }
 }

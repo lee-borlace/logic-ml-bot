@@ -20,6 +20,26 @@
         <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" Margin="20,395,0,0" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
         <Label Content="Log" HorizontalAlignment="Left" Margin="20,723,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtLog" HorizontalAlignment="Left" Height="103" Margin="20,754,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1378" Focusable="False"/>
-        <Button Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,395,0,0" VerticalAlignment="Top" Width="118" RenderTransformOrigin="-0.161,0.419" Height="20" Click="Button_Click"/>
+        <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,395,0,0" VerticalAlignment="Top" Width="118" RenderTransformOrigin="-0.161,0.419" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
+        <Label Content="Logic Elements&#xD;&#xA;" HorizontalAlignment="Left" Margin="1084,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.069,-0.537" Height="33"/>
+        <Button x:Name="btnLeftBracket" Content="(" HorizontalAlignment="Left" Margin="1084,70,0,0" VerticalAlignment="Top" Width="38" Click="BtnLeftBracket_Click"/>
+        <Button x:Name="btnRightBracket" Content=")" HorizontalAlignment="Left" Margin="1135,70,0,0" VerticalAlignment="Top" Width="38" Click="BtnRightBracket_Click"/>
+        <Button x:Name="btnImplies" Content="=&gt;" HorizontalAlignment="Left" Margin="1191,70,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnImplies_Click"/>
+        <Button x:Name="btnComma" Content="," HorizontalAlignment="Left" Margin="1246,70,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnComma_Click"/>
+        <Button x:Name="btnAnd" Content="AND" HorizontalAlignment="Left" Margin="1084,108,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnAnd_Click"/>
+        <Button x:Name="btnOr" Content="OR" HorizontalAlignment="Left" Margin="1135,108,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnOr_Click"/>
+        <Button x:Name="btnNot" Content="NOT" HorizontalAlignment="Left" Margin="1191,108,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnNot_Click"/>
+        <Button x:Name="btnConst1" Content="Const1" HorizontalAlignment="Left" Margin="1084,146,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst1_Click"/>
+        <Button x:Name="btnConst2" Content="Const2" HorizontalAlignment="Left" Margin="1142,146,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst2_Click"/>
+        <Button x:Name="btnConst3" Content="Const3" HorizontalAlignment="Left" Margin="1200,146,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst3_Click"/>
+        <Button x:Name="btnConst4" Content="Const4" HorizontalAlignment="Left" Margin="1258,146,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="3.879,0.607" Click="BtnConst4_Click"/>
+        <Button x:Name="btnConst5" Content="Const5" HorizontalAlignment="Left" Margin="1084,170,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="0.687,2.14" Click="BtnConst5_Click"/>
+        <Button x:Name="btnConst6" Content="Const6" HorizontalAlignment="Left" Margin="1142,170,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst6_Click"/>
+        <Button x:Name="btnX" Content="x" HorizontalAlignment="Left" Margin="1084,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnX_Click"/>
+        <Button x:Name="btnY" Content="y" HorizontalAlignment="Left" Margin="1135,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnY_Click"/>
+        <Button x:Name="btnZ" Content="z" HorizontalAlignment="Left" Margin="1191,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnZ_Click"/>
+        <Button x:Name="btnA" Content="a" HorizontalAlignment="Left" Margin="1246,205,0,0" VerticalAlignment="Top" Width="38" Click="BtnA_Click"/>
+        <Button x:Name="btnB" Content="b" HorizontalAlignment="Left" Margin="1299,205,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnB_Click"/>
+        <Button x:Name="btnC" Content="c" HorizontalAlignment="Left" Margin="1360,205,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnC_Click"/>
     </Grid>
 </Window>
