@@ -72,6 +72,7 @@ namespace NluTrainerDotNet
         {
             analysedJson = analysedJson.Trim();
             txtOutput.Text = analysedJson;
+            Log("Analysis complete.");
 
             try
             {
@@ -79,7 +80,7 @@ namespace NluTrainerDotNet
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error processing analysis result - {ex.Message}");
+                Log(ex);
                 return;
             }
         }
@@ -111,15 +112,23 @@ namespace NluTrainerDotNet
         {
             try
             {
+                string backedUpFileName = $"training_templates.{DateTime.Now.Ticks}.bak.json";
+                File.Copy(TemplatePath, backedUpFileName, true);
+
                 using (StreamReader file = File.OpenText(TemplatePath))
                 {
+                    
+
+
                     JsonSerializer serializer = new JsonSerializer();
                     _exampleTemplates = (List<TrainingExampleTemplate>)serializer.Deserialize(file, typeof(List<TrainingExampleTemplate>));
+                    Log($"Loaded {_exampleTemplates.Count} templates");
+                    Log($"Backed up old templates to {backedUpFileName}.");
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error loading templates - {ex.Message}");
+                Log(ex);
             }
         }
 
@@ -131,6 +140,37 @@ namespace NluTrainerDotNet
         private void TxtExampleLogic_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _lastFocusedControl = LastFocusedControl.Logic;
+        }
+
+        private void Log(string msg)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                txtLog.Text += System.Environment.NewLine + msg;
+            }));
+        }
+
+        private void Log(Exception ex)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                txtLog.Text += System.Environment.NewLine + ex.GetType();
+                txtLog.Text += System.Environment.NewLine + ex.Message;
+                txtLog.Text += System.Environment.NewLine + ex.StackTrace;
+                txtLog.ScrollToEnd();
+            }));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Save Templates", System.Windows.MessageBoxButton.YesNo);
+
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                var json = JsonConvert.SerializeObject(_exampleTemplates);
+                System.IO.File.WriteAllText(TemplatePath, json);
+                Log("Templates saved.");
+            }
         }
     }
 }

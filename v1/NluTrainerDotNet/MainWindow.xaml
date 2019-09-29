@@ -18,6 +18,8 @@
         <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Left" Height="66" Margin="20,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1031" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
         <Label Content="Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,353,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.006,0.39"/>
         <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" Margin="20,395,0,0" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
-
+        <Label Content="Log" HorizontalAlignment="Left" Margin="20,723,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtLog" HorizontalAlignment="Left" Height="103" Margin="20,754,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1378" Focusable="False"/>
+        <Button Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,395,0,0" VerticalAlignment="Top" Width="118" RenderTransformOrigin="-0.161,0.419" Height="20" Click="Button_Click"/>
     </Grid>
 </Window>
