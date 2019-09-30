@@ -8,6 +8,7 @@
         Title="NLU Trainer" Height="1015.259" Width="1431.728"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
+        Closing="Window_Closing"
         >
     <Grid>
         <TextBox x:Name="txtInput" HorizontalAlignment="Left" Height="20" Margin="20,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="688"/>

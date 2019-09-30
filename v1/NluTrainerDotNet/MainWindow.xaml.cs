@@ -228,6 +228,7 @@ namespace NluTrainerDotNet
             {
                 var json = JsonConvert.SerializeObject(_exampleTemplates);
                 System.IO.File.WriteAllText(TemplatePath, json);
+                _templatesDirty = false;
                 Log("Templates saved.");
             }
         }
@@ -602,7 +603,7 @@ namespace NluTrainerDotNet
 
         private void SetUpSaveInsertButton()
         {
-            if(_currentExample == null)
+            if (_currentExample == null)
             {
                 btnSaveInsert.Content = "Insert Example";
             }
@@ -614,54 +615,87 @@ namespace NluTrainerDotNet
 
         private void BtnNewExample_Click(object sender, RoutedEventArgs e)
         {
-            _currentExample = null;
-            txtInput.Text = string.Empty;
-            txtOutput.Text = string.Empty;
-            txtExampleLanguage.Text = string.Empty;
-            txtExampleLogic.Text = string.Empty;
-            dgTokens.ItemsSource = null;
-            dgTokens.ItemsSource = new List<NlpToken>();
-            SetUpSaveInsertButton();
+            try
+            {
+                _currentExample = null;
+                txtInput.Text = string.Empty;
+                txtOutput.Text = string.Empty;
+                txtExampleLanguage.Text = string.Empty;
+                txtExampleLogic.Text = string.Empty;
+                dgTokens.ItemsSource = null;
+                dgTokens.ItemsSource = new List<NlpToken>();
+                SetUpSaveInsertButton();
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
         }
 
 
+        private void BtnSaveInsert_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                if (_exampleTemplates == null)
+                {
+                    LoadTemplates();
+                }
+
+                if (_currentExample != null)
+                {
+                    _templatesDirty = true;
+
+                    var existingTemplate = _exampleTemplates.First(t => t.Id == _currentExample.Id);
+
+                    _currentExample.Language = existingTemplate.Language = txtExampleLanguage.Text.Trim();
+                    _currentExample.Logic = existingTemplate.Logic = txtExampleLogic.Text.Trim();
+
+                    dgTemplates.ItemsSource = null;
+                    dgTemplates.ItemsSource = _exampleTemplates;
+
+                    SetUpSaveInsertButton();
+                }
+                else
+                {
+                    _templatesDirty = true;
+
+                    _currentExample = new TrainingExampleTemplate()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Language = txtExampleLanguage.Text.Trim(),
+                        Logic = txtExampleLogic.Text.Trim()
+                    };
+
+                    _exampleTemplates.Add(_currentExample);
+
+                    dgTemplates.ItemsSource = null;
+                    dgTemplates.ItemsSource = _exampleTemplates;
+
+
+                    SetUpSaveInsertButton();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
 
         #endregion
 
-        private void BtnSaveInsert_Click(object sender, RoutedEventArgs e)
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(_currentExample != null)
+            if (_templatesDirty)
             {
-                _templatesDirty = true;
+                var messageBoxResult = System.Windows.MessageBox.Show("Are you sure? Templates are not saved.", "Close Window", System.Windows.MessageBoxButton.YesNo);
 
-                var existingTemplate = _exampleTemplates.First(t => t.Id == _currentExample.Id);
-
-                _currentExample.Language = existingTemplate.Language = txtExampleLanguage.Text.Trim();
-                _currentExample.Logic = existingTemplate.Logic = txtExampleLogic.Text.Trim();
-
-                dgTemplates.ItemsSource = null;
-                dgTemplates.ItemsSource = _exampleTemplates;
-
-                SetUpSaveInsertButton();
-            }
-            else
-            {
-                _templatesDirty = true;
-
-                _currentExample = new TrainingExampleTemplate()
+                if (messageBoxResult == MessageBoxResult.No)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    Language = txtExampleLanguage.Text.Trim(),
-                    Logic = txtExampleLogic.Text.Trim()
-                };
-
-                _exampleTemplates.Add(_currentExample);
-
-                dgTemplates.ItemsSource = null;
-                dgTemplates.ItemsSource = _exampleTemplates;
-                
-
-                SetUpSaveInsertButton();
+                    e.Cancel = true;
+                }
             }
         }
     }
