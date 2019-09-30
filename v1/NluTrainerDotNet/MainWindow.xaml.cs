@@ -41,6 +41,10 @@ namespace NluTrainerDotNet
         private int _caretIndexLanguage = 0;
         private int _caretIndexLogic = 0;
 
+        private bool _templatesDirty = false;
+
+        private TrainingExampleTemplate _currentExample = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -147,6 +151,15 @@ namespace NluTrainerDotNet
         {
             try
             {
+                if (_templatesDirty)
+                {
+                    var messageBoxResult = MessageBox.Show("There are unsaved template changes. Continue?", "Load Templates", System.Windows.MessageBoxButton.YesNo);
+                    if (messageBoxResult == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                }
+
                 string backedUpFileName = $"training_templates.{DateTime.Now.Ticks}.bak.json";
                 File.Copy(TemplatePath, backedUpFileName, true);
 
@@ -158,6 +171,10 @@ namespace NluTrainerDotNet
                     Log($"Backed up old templates to {backedUpFileName}.");
 
                     btnSaveTemplates.IsEnabled = true;
+                    _templatesDirty = false;
+
+                    dgTemplates.ItemsSource = _exampleTemplates;
+                    _currentExample = null;
                 }
             }
             catch (Exception ex)
@@ -358,7 +375,7 @@ namespace NluTrainerDotNet
                     indexToInsertInto = _caretIndexLogic;
                 }
 
-                if(textToInsert == ") ")
+                if (textToInsert == ") ")
                 {
                     if (textBox.Text.Length >= 2 && textBox.Text.EndsWith(", "))
                     {
@@ -408,7 +425,7 @@ namespace NluTrainerDotNet
 
         #endregion
 
-        #region  Data grid
+        #region  Analysis data grid
 
         private void DgAddText(object sender, RoutedEventArgs e)
         {
@@ -504,6 +521,148 @@ namespace NluTrainerDotNet
 
         #endregion
 
+        #region  Template data grid
 
+        private void DgTemplateSelect(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                {
+                    if (vis is DataGridRow)
+                    {
+                        var row = (DataGridRow)vis;
+                        var template = row.DataContext as TrainingExampleTemplate;
+
+                        _currentExample = template;
+
+                        txtInput.Text = string.Empty;
+                        txtOutput.Text = string.Empty;
+                        txtExampleLanguage.Text = _currentExample.Language;
+                        txtExampleLogic.Text = _currentExample.Logic;
+                        dgTokens.ItemsSource = new List<NlpToken>();
+
+                        SetUpSaveInsertButton();
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+        private void DgTemplateDelete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                {
+                    if (vis is DataGridRow)
+                    {
+                        var row = (DataGridRow)vis;
+                        var template = row.DataContext as TrainingExampleTemplate;
+
+                        var messageBoxResult = System.Windows.MessageBox.Show("Delete template?", "Delete Template", System.Windows.MessageBoxButton.YesNo);
+
+                        if (messageBoxResult == MessageBoxResult.Yes)
+                        {
+                            _currentExample = null;
+                            txtInput.Text = string.Empty;
+                            txtOutput.Text = string.Empty;
+                            txtExampleLanguage.Text = string.Empty;
+                            txtExampleLogic.Text = string.Empty;
+                            dgTokens.ItemsSource = new List<NlpToken>();
+
+                            _exampleTemplates = _exampleTemplates.Where(t => t.Id != template.Id).ToList();
+                            dgTemplates.ItemsSource = null;
+                            dgTemplates.ItemsSource = _exampleTemplates;
+                            _templatesDirty = true;
+
+                            _currentExample = null;
+
+                            SetUpSaveInsertButton();
+                        }
+
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+        #endregion
+
+        #region Example CRUD
+
+        private void SetUpSaveInsertButton()
+        {
+            if(_currentExample == null)
+            {
+                btnSaveInsert.Content = "Insert Example";
+            }
+            else
+            {
+                btnSaveInsert.Content = "Save Example";
+            }
+        }
+
+        private void BtnNewExample_Click(object sender, RoutedEventArgs e)
+        {
+            _currentExample = null;
+            txtInput.Text = string.Empty;
+            txtOutput.Text = string.Empty;
+            txtExampleLanguage.Text = string.Empty;
+            txtExampleLogic.Text = string.Empty;
+            dgTokens.ItemsSource = null;
+            dgTokens.ItemsSource = new List<NlpToken>();
+            SetUpSaveInsertButton();
+        }
+
+
+
+        #endregion
+
+        private void BtnSaveInsert_Click(object sender, RoutedEventArgs e)
+        {
+            if(_currentExample != null)
+            {
+                _templatesDirty = true;
+
+                var existingTemplate = _exampleTemplates.First(t => t.Id == _currentExample.Id);
+
+                _currentExample.Language = existingTemplate.Language = txtExampleLanguage.Text.Trim();
+                _currentExample.Logic = existingTemplate.Logic = txtExampleLogic.Text.Trim();
+
+                dgTemplates.ItemsSource = null;
+                dgTemplates.ItemsSource = _exampleTemplates;
+
+                SetUpSaveInsertButton();
+            }
+            else
+            {
+                _templatesDirty = true;
+
+                _currentExample = new TrainingExampleTemplate()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Language = txtExampleLanguage.Text.Trim(),
+                    Logic = txtExampleLogic.Text.Trim()
+                };
+
+                _exampleTemplates.Add(_currentExample);
+
+                dgTemplates.ItemsSource = null;
+                dgTemplates.ItemsSource = _exampleTemplates;
+                
+
+                SetUpSaveInsertButton();
+            }
+        }
     }
 }

@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NluTrainerDotNet"
         mc:Ignorable="d"
-        Title="NLU Trainer" Height="914.714" Width="1431.728">
+        Title="NLU Trainer" Height="1015.259" Width="1431.728"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        >
     <Grid>
         <TextBox x:Name="txtInput" HorizontalAlignment="Left" Height="20" Margin="20,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="688"/>
         <Button x:Name="btnAnalyse" Content="Analyse" HorizontalAlignment="Left" Margin="727,45,0,0" VerticalAlignment="Top" Width="75" Click="BtnAnalyse_Click"/>
@@ -16,11 +19,11 @@
         <TextBox x:Name="txtExampleLanguage" HorizontalAlignment="Left" Height="65" Margin="20,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="908" PreviewMouseLeftButtonDown ="TxtExampleLanguage_MouseLeftButtonDown"/>
         <Label Content="Example Logic&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,241,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Left" Height="66" Margin="20,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="908" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
-        <Label Content="Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.006,0.39"/>
-        <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" Margin="20,439,0,0" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
-        <Label Content="Log" HorizontalAlignment="Left" Margin="20,630,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtLog" HorizontalAlignment="Left" Height="184" Margin="20,673,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1378" Focusable="False"/>
-        <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,439,0,0" VerticalAlignment="Top" Width="118" RenderTransformOrigin="-0.161,0.419" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
+        <Label Content="Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="20,433,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.006,0.39"/>
+        <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" Margin="20,475,0,0" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
+        <Label Content="Log" HorizontalAlignment="Left" Margin="20,737,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtLog" HorizontalAlignment="Left" Height="184" Margin="20,776,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1378" Focusable="False"/>
+        <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="154,475,0,0" VerticalAlignment="Top" Width="118" RenderTransformOrigin="-0.161,0.419" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
         <Button x:Name="btnLeftBracket" Content="(" HorizontalAlignment="Left" Margin="20,340,0,0" VerticalAlignment="Top" Width="38" Click="BtnLeftBracket_Click"/>
         <Button x:Name="btnRightBracket" Content=")" HorizontalAlignment="Left" Margin="68,340,0,0" VerticalAlignment="Top" Width="38" Click="BtnRightBracket_Click"/>
         <Button x:Name="btnImplies" Content="=&gt;" HorizontalAlignment="Left" Margin="111,340,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnImplies_Click"/>
@@ -43,7 +46,11 @@
         <Label Content="Tokens" HorizontalAlignment="Left" Margin="971,35,0,0" VerticalAlignment="Top"/>
 
         <Grid>
-            <DataGrid x:Name="dgTokens" HorizontalAlignment="Left" Height="461" Margin="971,76,0,0" VerticalAlignment="Top" Width="426" AutoGenerateColumns="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="111*"/>
+                <ColumnDefinition Width="245*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="dgTokens" HorizontalAlignment="Left" Height="461" Margin="527,76,0,0" VerticalAlignment="Top" Width="426" AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="false">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Text">
                         <DataGridTemplateColumn.CellTemplate>
@@ -76,10 +83,40 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="btnInstance" Content="Instance(" HorizontalAlignment="Left" Margin="330,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnInstance_Click"/>
-            <Button x:Name="btnVerb" Content="Verb(" HorizontalAlignment="Left" Margin="421,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnVerb_Click"/>
-            <Button x:Name="btnVerbTense" Content="VerbTense(" HorizontalAlignment="Left" Margin="605,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnVerbTense_Click"/>
-            <Button x:Name="btnAdjective" Content="Adjective(" HorizontalAlignment="Left" Margin="697,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdjective_Click"/>
-            <Button x:Name="btnAdverb" Content="Adverb(" HorizontalAlignment="Left" Margin="512,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdverb_Click"/>
+            <Button x:Name="btnVerb" Content="Verb(" HorizontalAlignment="Left" Margin="421,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnVerb_Click" Grid.ColumnSpan="2"/>
+            <Button x:Name="btnVerbTense" Content="VerbTense(" HorizontalAlignment="Left" Margin="161,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnVerbTense_Click" Grid.Column="1"/>
+            <Button x:Name="btnAdjective" Content="Adjective(" HorizontalAlignment="Left" Margin="253,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdjective_Click" Grid.Column="1"/>
+            <Button x:Name="btnAdverb" Content="Adverb(" HorizontalAlignment="Left" Margin="68,366,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdverb_Click" Grid.Column="1"/>
+            <DataGrid x:Name="dgTemplates" HorizontalAlignment="Left" Height="193" Margin="26,525,0,0" VerticalAlignment="Top" Width="915" AutoGenerateColumns="False" Grid.ColumnSpan="2" CanUserAddRows="false">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Example">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox Text="{Binding Language}" />
+                                    <TextBox Text="{Binding Logic}" />
+                                </StackPanel >
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Select">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDgAddText" Content="Select" Click="DgTemplateSelect" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Delete">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDgAddText" Content="Delete" Click="DgTemplateDelete" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="btnSaveInsert" Content="Insert Example" HorizontalAlignment="Left" Margin="26,403,0,0" VerticalAlignment="Top" Width="108" Click="BtnSaveInsert_Click"/>
+            <Button x:Name="btnNewExample" Content="New Example" HorizontalAlignment="Left" Margin="164,403,0,0" VerticalAlignment="Top" Width="108" Click="BtnNewExample_Click"/>
         </Grid>
     </Grid>
 </Window>

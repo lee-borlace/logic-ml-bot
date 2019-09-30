@@ -8,6 +8,8 @@ namespace NluTrainerDotNet.Model
 {
     public class TrainingExampleTemplate
     {
+        public string Id { get; set; }
+
         public string Language { get; set; }
 
         public string Logic { get; set; }
