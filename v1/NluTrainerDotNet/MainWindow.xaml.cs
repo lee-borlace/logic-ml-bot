@@ -127,18 +127,26 @@ namespace NluTrainerDotNet
 
         private string RunPythonCommand(string pythonPath, string commandPath, string args)
         {
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = pythonPath;
-            start.Arguments = $"{commandPath} {args}";
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-
-            using (Process process = Process.Start(start))
+            try
             {
-                using (StreamReader reader = process.StandardOutput)
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = pythonPath;
+                start.Arguments = $"{commandPath} {args}";
+                start.UseShellExecute = false;
+                start.RedirectStandardOutput = true;
+
+                using (Process process = Process.Start(start))
                 {
-                    return reader.ReadToEnd();
+                    using (StreamReader reader = process.StandardOutput)
+                    {
+                        return reader.ReadToEnd();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+                return string.Empty;
             }
         }
 
