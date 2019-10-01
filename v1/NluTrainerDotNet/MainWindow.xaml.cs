@@ -64,11 +64,6 @@ namespace NluTrainerDotNet
 
         private void Analyse(object input)
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                txtOutput.Text = "Analysing...";
-            }));
-
             var analysedJson = !StubJson ? RunPythonCommand(PythonExecutablePath, ScriptPath, $@"""{(string)input}""") : SampleJson;
 
             if (string.IsNullOrEmpty(analysedJson))
@@ -92,7 +87,7 @@ namespace NluTrainerDotNet
         private void HandleAnalysisResponse(string analysedJson)
         {
             analysedJson = analysedJson.Trim();
-            txtOutput.Text = analysedJson;
+            Log(analysedJson);
             Log("Analysis complete.");
 
             try
@@ -558,8 +553,7 @@ namespace NluTrainerDotNet
 
                         _currentExample = template;
 
-                        txtInput.Text = string.Empty;
-                        txtOutput.Text = string.Empty;
+                        txtInput.Text = _currentExample.ExampleText;
                         txtExampleLanguage.Text = _currentExample.Language;
                         txtExampleLogic.Text = _currentExample.Logic;
                         cbSentenceType.Text = !string.IsNullOrWhiteSpace(_currentExample.SentenceType) ? _currentExample.SentenceType : "Unknown";
@@ -594,7 +588,6 @@ namespace NluTrainerDotNet
                         {
                             _currentExample = null;
                             txtInput.Text = string.Empty;
-                            txtOutput.Text = string.Empty;
                             txtExampleLanguage.Text = string.Empty;
                             txtExampleLogic.Text = string.Empty;
                             dgTokens.ItemsSource = new List<NlpToken>();
@@ -641,7 +634,6 @@ namespace NluTrainerDotNet
             {
                 _currentExample = null;
                 txtInput.Text = string.Empty;
-                txtOutput.Text = string.Empty;
                 txtExampleLanguage.Text = string.Empty;
                 txtExampleLogic.Text = string.Empty;
                 cbSentenceType.Text = "Unknown";
@@ -660,6 +652,18 @@ namespace NluTrainerDotNet
         {
             try
             {
+                // Do some validation.
+                if(txtExampleLogic.Text.Count(f => f == '(') != txtExampleLogic.Text.Count(f => f == ')'))
+                {
+                    MessageBox.Show("Bracket mismatch in logic example!");
+                    return;
+                }
+
+                if((string.IsNullOrWhiteSpace(txtExampleLanguage.Text) || string.IsNullOrWhiteSpace(txtExampleLogic.Text)) && string.IsNullOrWhiteSpace(txtInput.Text))
+                {
+                    MessageBox.Show("If you don't specify language or logic, then you must specify example!");
+                    return;
+                }
 
                 if (_exampleTemplates == null)
                 {
@@ -672,6 +676,7 @@ namespace NluTrainerDotNet
 
                     var existingTemplate = _exampleTemplates.First(t => t.Id == _currentExample.Id);
 
+                    _currentExample.ExampleText = txtInput.Text;
                     _currentExample.Language = existingTemplate.Language = txtExampleLanguage.Text.Trim();
                     _currentExample.Logic = existingTemplate.Logic = txtExampleLogic.Text.Trim();
                     _currentExample.SentenceType = cbSentenceType.Text;
@@ -690,8 +695,9 @@ namespace NluTrainerDotNet
                         Id = Guid.NewGuid().ToString(),
                         Language = txtExampleLanguage.Text.Trim(),
                         Logic = txtExampleLogic.Text.Trim(),
-                        SentenceType = cbSentenceType.Text
-                };
+                        SentenceType = cbSentenceType.Text,
+                        ExampleText = txtInput.Text
+                    };
 
                     _exampleTemplates.Add(_currentExample);
 

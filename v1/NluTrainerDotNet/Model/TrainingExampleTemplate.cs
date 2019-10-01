@@ -10,6 +10,8 @@ namespace NluTrainerDotNet.Model
     {
         public string Id { get; set; }
 
+        public string ExampleText { get; set; }
+
         public string Language { get; set; }
 
         public string Logic { get; set; }
