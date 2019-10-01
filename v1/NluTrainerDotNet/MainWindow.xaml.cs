@@ -50,6 +50,13 @@ namespace NluTrainerDotNet
 
         private TrainingExampleTemplate _currentExample = null;
 
+        const string PronHe = "He_DFJ8Y3T3";
+        const string PronShe = "She_9DI3Y45D";
+        const string PronIt = "It_2MB8D5E7";
+        const string PronThey = "They_DJE9FIR2";
+        const string PronListener = "Listener_HDI92HED";
+        const string PronSpeaker = "Speaker_DH7WHD7D";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -371,6 +378,36 @@ namespace NluTrainerDotNet
             InsertToSelectedTextBox("Adjective(");
         }
 
+        private void BtnSpeaker_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox($"{PronSpeaker}, ");
+        }
+
+        private void BtnListener_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox($"{PronListener}, ");
+        }
+
+        private void BtnHe_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox($"{PronHe}, ");
+        }
+
+        private void BtnShe_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox($"{PronShe}, ");
+        }
+
+        private void BtnIt_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox($"{PronIt}, ");
+        }
+
+        private void BtnThey_Click(object sender, RoutedEventArgs e)
+        {
+            InsertToSelectedTextBox($"{PronThey}, ");
+        }
+
         void InsertToSelectedTextBox(string textToInsert, bool mayHaveSpaceBefore = true)
         {
             try
@@ -652,14 +689,19 @@ namespace NluTrainerDotNet
         {
             try
             {
+                // Do some cleanup
+                txtExampleLogic.Text = txtExampleLogic.Text.Replace(",)", ")");
+                txtExampleLogic.Text = txtExampleLogic.Text.Replace(", )", ")");
+                txtExampleLogic.Text = txtExampleLogic.Text.Replace(",  )", ")");
+
                 // Do some validation.
-                if(txtExampleLogic.Text.Count(f => f == '(') != txtExampleLogic.Text.Count(f => f == ')'))
+                if (txtExampleLogic.Text.Count(f => f == '(') != txtExampleLogic.Text.Count(f => f == ')'))
                 {
                     MessageBox.Show("Bracket mismatch in logic example!");
                     return;
                 }
 
-                if((string.IsNullOrWhiteSpace(txtExampleLanguage.Text) || string.IsNullOrWhiteSpace(txtExampleLogic.Text)) && string.IsNullOrWhiteSpace(txtInput.Text))
+                if ((string.IsNullOrWhiteSpace(txtExampleLanguage.Text) || string.IsNullOrWhiteSpace(txtExampleLogic.Text)) && string.IsNullOrWhiteSpace(txtInput.Text))
                 {
                     MessageBox.Show("If you don't specify language or logic, then you must specify example!");
                     return;
@@ -729,5 +771,7 @@ namespace NluTrainerDotNet
                 }
             }
         }
+
+
     }
 }

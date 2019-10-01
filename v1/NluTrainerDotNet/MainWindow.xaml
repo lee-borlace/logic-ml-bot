@@ -126,6 +126,12 @@
                 <ComboBoxItem Content="Command"/>
                 <ComboBoxItem Content="Social"/>
             </ComboBox>
+            <Button x:Name="btnSpeaker" Content="Speaker" HorizontalAlignment="Left" Margin="330,349,0,0" VerticalAlignment="Top" Width="75" Click="BtnSpeaker_Click"/>
+            <Button x:Name="btnListener" Content="Listener" HorizontalAlignment="Left" Margin="421,349,0,0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" Click="BtnListener_Click"/>
+            <Button x:Name="btnHe" Content="He" Grid.Column="1" HorizontalAlignment="Left" Margin="68,349,0,0" VerticalAlignment="Top" Width="75" Click="BtnHe_Click"/>
+            <Button x:Name="btnShe" Content="She" Grid.Column="1" HorizontalAlignment="Left" Margin="161,349,0,0" VerticalAlignment="Top" Width="74" Click="BtnShe_Click"/>
+            <Button x:Name="btnIt" Content="It" Grid.Column="1" HorizontalAlignment="Left" Margin="253,349,0,0" VerticalAlignment="Top" Width="75" Click="BtnIt_Click"/>
+            <Button x:Name="btnThey" Content="They" Grid.Column="1" HorizontalAlignment="Left" Margin="346,349,0,0" VerticalAlignment="Top" Width="74" RenderTransformOrigin="0.08,0.475" Click="BtnThey_Click"/>
         </Grid>
     </Grid>
 </Window>
