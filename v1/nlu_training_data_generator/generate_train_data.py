@@ -9,14 +9,14 @@ TRAIN_PERCENT = 0.7
 VAL_PERCENT = 0.15
 TEST_PERCENT = 0.15
 
-SRC_TRAIN = "src-train.txt"
-TGT_TRAIN = "tgt-train.txt"
+ENGLISH_TRAIN = "english-train.txt"
+LOGIC_TRAIN = "logic-train.txt"
 
-SRC_VAL = "src-val.txt"
-TGT_VAL = "tgt-val.txt"
+ENGLISH_VAL = "english-val.txt"
+LOGIC_VAL = "logic-val.txt"
 
-SRC_TEST = "src-test.txt"
-TGT_TEST = "tgt-test.txt"
+ENGLISH_TEST = "english-test.txt"
+LOGIC_TEST = "logic-test.txt"
 
 # These let us add some random errors into the natural language training data to hopefully make it more robust
 RATE_WORD_ORDER_SWAP = 0.0001 # Randomly swap the order of any word with its predecessor
@@ -86,14 +86,14 @@ def generate_data(file_name_src, file_name_tgt, count):
         # *************************************************
         
         # TODO : Do this cleanup of punctuation more robustly.
-        language = template['language'].strip()
+        language = template['Language'].strip()
         language = language.replace(',', '')
         language = language.replace('.', '')
         language = language.replace('(', '')
         language = language.replace(')', '')
         language = language.replace('-', '')
         
-        logic = template['logic'].strip()
+        logic = template['Logic'].strip()
 
         # Skip any examples which don't have language or logic component
         if not language or not logic :
@@ -234,9 +234,9 @@ def generate_data(file_name_src, file_name_tgt, count):
         out_file_tgt.write('\n')
         
         
-generate_data(SRC_TRAIN, TGT_TRAIN, TRAIN_COUNT)
-generate_data(SRC_VAL, TGT_VAL, VAL_COUNT)
-generate_data(SRC_TEST, TGT_TEST, VAL_COUNT)
+generate_data(ENGLISH_TRAIN, LOGIC_TRAIN, TRAIN_COUNT)
+generate_data(ENGLISH_VAL, LOGIC_VAL, VAL_COUNT)
+generate_data(ENGLISH_TEST, LOGIC_TEST, VAL_COUNT)
 
 print("DONE!")
     

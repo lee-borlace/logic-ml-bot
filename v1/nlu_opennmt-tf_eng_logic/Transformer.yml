@@ -1,0 +1,12 @@
+model_dir: run
+
+data:
+  train_features_file: english-train.txt
+  train_labels_file: logic-train.txt
+  eval_features_file: english-val.txt
+  eval_labels_file: logic-val.txt
+  source_words_vocabulary: english-vocab.txt
+  target_words_vocabulary: logic-vocab.txt
+
+train:
+  batch_size: 512

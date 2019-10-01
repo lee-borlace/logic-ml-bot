@@ -5,50 +5,143 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NluTrainerDotNet"
         mc:Ignorable="d"
-        Title="NLU Trainer" Height="1015.259" Width="1431.728"
+        Title="NLU Trainer" Height="637.259" Width="1431.728"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized"
         Closing="Window_Closing"
         >
     <Grid>
-        <TextBox x:Name="txtInput" HorizontalAlignment="Left" Height="20" Margin="5,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="688"/>
-        <Button x:Name="btnAnalyse" Content="Analyse" HorizontalAlignment="Left" Margin="618,53,0,0" VerticalAlignment="Top" Width="75" Click="BtnAnalyse_Click"/>
-        <Label Content="Example text" HorizontalAlignment="Left" Margin="5,-5,0,0" VerticalAlignment="Top"/>
-        <Label Content="Example Language&#xD;&#xA;" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top" Height="33"/>
-        <TextBox x:Name="txtExampleLanguage" HorizontalAlignment="Left" Height="37" Margin="5,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="688" PreviewMouseLeftButtonDown ="TxtExampleLanguage_MouseLeftButtonDown"/>
-        <Label Content="Example Logic&#xD;&#xA;" HorizontalAlignment="Left" Margin="5,134,0,0" VerticalAlignment="Top" Height="25"/>
-        <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Left" Height="48" Margin="5,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="688" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
-        <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" Margin="289,313,0,0" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
-        <Label Content="Log" HorizontalAlignment="Left" Margin="731,363,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtLog" HorizontalAlignment="Left" Height="158" Margin="731,394,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="286" Focusable="False"/>
-        <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" Margin="403,313,0,0" VerticalAlignment="Top" Width="118" RenderTransformOrigin="-0.161,0.419" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
-        <Button x:Name="btnLeftBracket" Content="(" HorizontalAlignment="Left" Margin="5,214,0,0" VerticalAlignment="Top" Width="38" Click="BtnLeftBracket_Click"/>
-        <Button x:Name="btnRightBracket" Content=")" HorizontalAlignment="Left" Margin="53,214,0,0" VerticalAlignment="Top" Width="38" Click="BtnRightBracket_Click"/>
-        <Button x:Name="btnImplies" Content="=&gt;" HorizontalAlignment="Left" Margin="96,214,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnImplies_Click"/>
-        <Button x:Name="btnComma" Content="," HorizontalAlignment="Left" Margin="139,214,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnComma_Click"/>
-        <Button x:Name="btnAnd" Content="AND" HorizontalAlignment="Left" Margin="182,214,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnAnd_Click"/>
-        <Button x:Name="btnOr" Content="OR" HorizontalAlignment="Left" Margin="225,214,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnOr_Click"/>
-        <Button x:Name="btnNot" Content="NOT" HorizontalAlignment="Left" Margin="268,214,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnNot_Click"/>
-        <Button x:Name="btnConst1" Content="Const1," HorizontalAlignment="Left" Margin="320,214,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst1_Click"/>
-        <Button x:Name="btnConst2" Content="Const2," HorizontalAlignment="Left" Margin="378,214,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst2_Click"/>
-        <Button x:Name="btnConst3" Content="Const3," HorizontalAlignment="Left" Margin="436,214,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst3_Click"/>
-        <Button x:Name="btnConst4" Content="Const4," HorizontalAlignment="Left" Margin="494,214,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="3.879,0.607" Click="BtnConst4_Click"/>
-        <Button x:Name="btnConst5" Content="Const5," HorizontalAlignment="Left" Margin="552,214,0,0" VerticalAlignment="Top" Width="53" RenderTransformOrigin="0.687,2.14" Click="BtnConst5_Click"/>
-        <Button x:Name="btnConst6" Content="Const6," HorizontalAlignment="Left" Margin="610,214,0,0" VerticalAlignment="Top" Width="53" Click="BtnConst6_Click"/>
-        <Button x:Name="btnX" Content="x," HorizontalAlignment="Left" Margin="5,239,0,0" VerticalAlignment="Top" Width="38" Click="BtnX_Click"/>
-        <Button x:Name="btnY" Content="y," HorizontalAlignment="Left" Margin="53,239,0,0" VerticalAlignment="Top" Width="38" Click="BtnY_Click"/>
-        <Button x:Name="btnZ" Content="z," HorizontalAlignment="Left" Margin="96,239,0,0" VerticalAlignment="Top" Width="38" Click="BtnZ_Click"/>
-        <Button x:Name="btnA" Content="a," HorizontalAlignment="Left" Margin="139,239,0,0" VerticalAlignment="Top" Width="38" Click="BtnA_Click"/>
-        <Button x:Name="btnB" Content="b," HorizontalAlignment="Left" Margin="182,239,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnB_Click"/>
-        <Button x:Name="btnC" Content="c," HorizontalAlignment="Left" Margin="225,239,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.857,0.539" Click="BtnC_Click"/>
-        <Label Content="Tokens" HorizontalAlignment="Left" Margin="752,5,0,0" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="33*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="111*"/>
-                <ColumnDefinition Width="245*"/>
-            </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgTokens" HorizontalAlignment="Left" Height="320" Margin="313,24,0,0" VerticalAlignment="Top" Width="328" AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="false">
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Label Content="Example text" HorizontalAlignment="Stretch" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="txtInput" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="500" />
+                <Button x:Name="btnAnalyse" Content="Analyse" HorizontalAlignment="Right" Click="BtnAnalyse_Click"/>
+            </StackPanel>
+            <Label Content="Example Language" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="33"/>
+            <TextBox x:Name="txtExampleLanguage" HorizontalAlignment="Stretch" Height="37" TextWrapping="Wrap" VerticalAlignment="Top" PreviewMouseLeftButtonDown ="TxtExampleLanguage_MouseLeftButtonDown"/>
+            <Label Content="Example Logic" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25"/>
+            <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Stretch" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
+
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Button x:Name="btnLeftBracket" Content="(" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnLeftBracket_Click"/>
+                <Button x:Name="btnRightBracket" Content=")" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnRightBracket_Click"/>
+                <Button x:Name="btnImplies" Content="=&gt;" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnImplies_Click"/>
+                <Button x:Name="btnComma" Content="," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnComma_Click"/>
+                <Button x:Name="btnAnd" Content="AND" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnAnd_Click"/>
+                <Button x:Name="btnOr" Content="OR" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.5,0.5" Click="BtnOr_Click"/>
+                <Button x:Name="btnNot" Content="NOT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.271,0.361" Click="BtnNot_Click"/>
+                <Button x:Name="btnInstance" Content="Instance(" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="75" Click="BtnInstance_Click"/>
+                <Button x:Name="btnVerb" Content="Verb(" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="75" Click="BtnVerb_Click" Grid.ColumnSpan="2"/>
+                <Button x:Name="btnVerbTense" Content="VerbTense(" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="BtnVerbTense_Click" Grid.Column="1"/>
+                <Button x:Name="btnAdjective" Content="Adjective(" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="75" Click="BtnAdjective_Click" Grid.Column="1"/>
+                <Button x:Name="btnAdverb" Content="Adverb(" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="75" Click="BtnAdverb_Click" Grid.Column="1"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Button x:Name="btnConst1" Content="Const1," HorizontalAlignment="Left"  VerticalAlignment="Top" Width="53" Click="BtnConst1_Click"/>
+                <Button x:Name="btnConst2" Content="Const2," HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Click="BtnConst2_Click"/>
+                <Button x:Name="btnConst3" Content="Const3," HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Click="BtnConst3_Click"/>
+                <Button x:Name="btnConst4" Content="Const4," HorizontalAlignment="Left"  VerticalAlignment="Top" Width="53" RenderTransformOrigin="3.879,0.607" Click="BtnConst4_Click"/>
+                <Button x:Name="btnConst5" Content="Const5," HorizontalAlignment="Left"  VerticalAlignment="Top" Width="53" RenderTransformOrigin="0.687,2.14" Click="BtnConst5_Click"/>
+                <Button x:Name="btnConst6" Content="Const6," HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Click="BtnConst6_Click"/>
+                <Button x:Name="btnX" Content="x," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnX_Click"/>
+                <Button x:Name="btnY" Content="y," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnY_Click"/>
+                <Button x:Name="btnZ" Content="z," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnZ_Click"/>
+                <Button x:Name="btnA" Content="a," HorizontalAlignment="Left"  VerticalAlignment="Top" Width="38" Click="BtnA_Click"/>
+                <Button x:Name="btnB" Content="b," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnB_Click"/>
+                <Button x:Name="btnC" Content="c," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38"  Click="BtnC_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Button x:Name="btnSpeaker" Content="Speaker" VerticalAlignment="Top" Click="BtnSpeaker_Click"/>
+                <Button x:Name="btnListener" Content="Listener" HorizontalAlignment="Left" VerticalAlignment="Top" Width="58" Click="BtnListener_Click"/>
+                <Button x:Name="btnHe" Content="He" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="48" Click="BtnHe_Click"/>
+                <Button x:Name="btnShe" Content="She" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="39" Click="BtnShe_Click"/>
+                <Button x:Name="btnIt" Content="It" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="41" Click="BtnIt_Click"/>
+                <Button x:Name="btnThey" Content="They" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="42"  Click="BtnThey_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Margin="0 20 0 0">
+                <Label Content="Sentence Type" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24"/>
+                <ComboBox x:Name="cbSentenceType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120">
+                    <ComboBoxItem Content="Unknown"/>
+                    <ComboBoxItem Content="Statement"/>
+                    <ComboBoxItem Content="Question"/>
+                    <ComboBoxItem Content="Command"/>
+                    <ComboBoxItem Content="Social"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Button x:Name="btnSaveInsert" Content="Insert Example" HorizontalAlignment="Left" VerticalAlignment="Top" Width="108" Click="BtnSaveInsert_Click"/>
+                <Button x:Name="btnNewExample" Content="New Example" HorizontalAlignment="Left" VerticalAlignment="Top" Width="108" Click="BtnNewExample_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
+                <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="118" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
+            </StackPanel>
+            <Grid  Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="66*"/>
+                    <ColumnDefinition Width="33*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <DataGrid x:Name="dgTemplates" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" CanUserAddRows="false" Height="200">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Example">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBox Text="{Binding ExampleText}" Visibility="{Binding ExampleTextVisibility}" FontWeight="Bold" />
+                                        <TextBox Text="{Binding Language}" Visibility="{Binding LanguageVisibility}"/>
+                                        <TextBox Text="{Binding Logic}" Visibility="{Binding LogicVisibility}"/>
+                                        <TextBox Text="{Binding SentenceType}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Select">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="btnDgAddText" Content="Select" Click="DgTemplateSelect" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Delete">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="btnDgAddText" Content="Delete" Click="DgTemplateDelete" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel Grid.Row="0" Grid.Column="1">
+                    <Label Content="Log" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtLog" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Focusable="True" Height="150" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+
+
+
+
+
+        
+        
+        
+        
+
+
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            <Label Content="Tokens" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <DataGrid x:Name="dgTokens" HorizontalAlignment="Stretch" Height="320" VerticalAlignment="Top" AutoGenerateColumns="False" CanUserAddRows="false">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Text">
                         <DataGridTemplateColumn.CellTemplate>
@@ -80,57 +173,9 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="btnInstance" Content="Instance(" HorizontalAlignment="Left" Margin="285,240,0,0" VerticalAlignment="Top" Width="75" Click="BtnInstance_Click"/>
-            <Button x:Name="btnVerb" Content="Verb(" HorizontalAlignment="Left" Margin="376,240,0,0" VerticalAlignment="Top" Width="75" Click="BtnVerb_Click" Grid.ColumnSpan="2"/>
-            <Button x:Name="btnVerbTense" Content="VerbTense(" HorizontalAlignment="Left" Margin="116,240,0,0" VerticalAlignment="Top" Width="75" Click="BtnVerbTense_Click" Grid.Column="1"/>
-            <Button x:Name="btnAdjective" Content="Adjective(" HorizontalAlignment="Left" Margin="208,240,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdjective_Click" Grid.Column="1"/>
-            <Button x:Name="btnAdverb" Content="Adverb(" HorizontalAlignment="Left" Margin="23,240,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdverb_Click" Grid.Column="1"/>
-            <DataGrid x:Name="dgTemplates" HorizontalAlignment="Left" Height="200" Margin="11,349,0,0" VerticalAlignment="Top" Width="701" AutoGenerateColumns="False" Grid.ColumnSpan="2" CanUserAddRows="false">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Example">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBox Text="{Binding ExampleText}" Visibility="{Binding ExampleTextVisibility}" FontWeight="Bold" />
-                                    <TextBox Text="{Binding Language}" Visibility="{Binding LanguageVisibility}"/>
-                                    <TextBox Text="{Binding Logic}" Visibility="{Binding LogicVisibility}"/>
-                                    <TextBox Text="{Binding SentenceType}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Select">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="btnDgAddText" Content="Select" Click="DgTemplateSelect" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Delete">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="btnDgAddText" Content="Delete" Click="DgTemplateDelete" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button x:Name="btnSaveInsert" Content="Insert Example" HorizontalAlignment="Left" Margin="26,314,0,0" VerticalAlignment="Top" Width="108" Click="BtnSaveInsert_Click"/>
-            <Button x:Name="btnNewExample" Content="New Example" HorizontalAlignment="Left" Margin="164,313,0,0" VerticalAlignment="Top" Width="108" Click="BtnNewExample_Click"/>
-            <Label Content="Sentence Type&#xA;" HorizontalAlignment="Left" Margin="26,272,0,0" VerticalAlignment="Top" Height="24"/>
-            <ComboBox x:Name="cbSentenceType" HorizontalAlignment="Left" Margin="164,272,0,0" VerticalAlignment="Top" Width="120">
-                <ComboBoxItem Content="Unknown"/>
-                <ComboBoxItem Content="Statement"/>
-                <ComboBoxItem Content="Question"/>
-                <ComboBoxItem Content="Command"/>
-                <ComboBoxItem Content="Social"/>
-            </ComboBox>
-            <Button x:Name="btnSpeaker" Content="Speaker" Margin="300,274,84,0" VerticalAlignment="Top" Click="BtnSpeaker_Click"/>
-            <Button x:Name="btnListener" Content="Listener" HorizontalAlignment="Left" Margin="376,274,0,0" VerticalAlignment="Top" Width="58" Click="BtnListener_Click"/>
-            <Button x:Name="btnHe" Content="He" Grid.Column="1" HorizontalAlignment="Left" Margin="8,274,0,0" VerticalAlignment="Top" Width="48" Click="BtnHe_Click"/>
-            <Button x:Name="btnShe" Content="She" Grid.Column="1" HorizontalAlignment="Left" Margin="76,274,0,0" VerticalAlignment="Top" Width="39" Click="BtnShe_Click"/>
-            <Button x:Name="btnIt" Content="It" Grid.Column="1" HorizontalAlignment="Left" Margin="133,274,0,0" VerticalAlignment="Top" Width="41" Click="BtnIt_Click"/>
-            <Button x:Name="btnThey" Content="They" Grid.Column="1" HorizontalAlignment="Left" Margin="195,274,0,0" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.08,0.475" Click="BtnThey_Click"/>
-        </Grid>
+        </StackPanel>
+
+        
     </Grid>
+
 </Window>
