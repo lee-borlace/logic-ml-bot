@@ -236,19 +236,14 @@ namespace NluTrainerDotNet
         {
             try
             {
-                var messageBoxResult = System.Windows.MessageBox.Show("Overwrite templates?", "Save Templates", System.Windows.MessageBoxButton.YesNo);
+                string backedUpFileName = $"training_templates.{DateTime.Now.Ticks}.bak.json";
+                File.Copy(System.IO.Path.Combine(TemplateFolder, TemplateFile), System.IO.Path.Combine(TemplateFolder, backedUpFileName), true);
+                Log($"Backed up old templates to {backedUpFileName}.");
 
-                if (messageBoxResult == MessageBoxResult.Yes)
-                {
-                    string backedUpFileName = $"training_templates.{DateTime.Now.Ticks}.bak.json";
-                    File.Copy(System.IO.Path.Combine(TemplateFolder, TemplateFile), System.IO.Path.Combine(TemplateFolder, backedUpFileName), true);
-                    Log($"Backed up old templates to {backedUpFileName}.");
-
-                    var json = JsonConvert.SerializeObject(_exampleTemplates);
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(TemplateFolder, TemplateFile), json);
-                    _templatesDirty = false;
-                    Log("Templates saved.");
-                }
+                var json = JsonConvert.SerializeObject(_exampleTemplates);
+                System.IO.File.WriteAllText(System.IO.Path.Combine(TemplateFolder, TemplateFile), json);
+                _templatesDirty = false;
+                Log("Templates saved.");
             }
             catch (Exception ex)
             {
@@ -325,32 +320,32 @@ namespace NluTrainerDotNet
 
         private void BtnX_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("x, ");
+            InsertToSelectedTextBox("x, ", capitaliseForLogicBox: false);
         }
 
         private void BtnY_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("y, ");
+            InsertToSelectedTextBox("y, ", capitaliseForLogicBox: false);
         }
 
         private void BtnZ_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("z, ");
+            InsertToSelectedTextBox("z, ", capitaliseForLogicBox: false);
         }
 
         private void BtnA_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("a, ");
+            InsertToSelectedTextBox("a, ", capitaliseForLogicBox: false);
         }
 
         private void BtnB_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("b, ");
+            InsertToSelectedTextBox("b, ", capitaliseForLogicBox: false);
         }
 
         private void BtnC_Click(object sender, RoutedEventArgs e)
         {
-            InsertToSelectedTextBox("c, ");
+            InsertToSelectedTextBox("c, ", capitaliseForLogicBox: false);
         }
 
         private void BtnInstance_Click(object sender, RoutedEventArgs e)
@@ -408,7 +403,7 @@ namespace NluTrainerDotNet
             InsertToSelectedTextBox($"{PronThey}, ");
         }
 
-        void InsertToSelectedTextBox(string textToInsert, bool mayHaveSpaceBefore = true)
+        void InsertToSelectedTextBox(string textToInsert, bool mayHaveSpaceBefore = true, bool capitaliseForLogicBox = true)
         {
             try
             {
@@ -427,6 +422,18 @@ namespace NluTrainerDotNet
                 {
                     textBox = txtExampleLogic;
                     indexToInsertInto = _caretIndexLogic;
+
+                    if (capitaliseForLogicBox)
+                    {
+                        if (textToInsert.Length == 1)
+                        {
+                            textToInsert = textToInsert.First().ToString().ToUpper();
+                        }
+                        else
+                        {
+                            textToInsert = textToInsert.First().ToString().ToUpper() + textToInsert.Substring(1);
+                        }
+                    }
                 }
 
                 if (textToInsert == ") ")
@@ -446,8 +453,6 @@ namespace NluTrainerDotNet
                         textBox.Text = textBox.Text.Substring(0, textBox.Text.Length);
                     }
                 }
-
-
 
                 var origCaratIndex = indexToInsertInto;
 
