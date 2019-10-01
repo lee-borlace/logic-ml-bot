@@ -27,9 +27,14 @@ namespace NluTrainerDotNet
     /// </summary>
     public partial class MainWindow : Window
     {
-        const string PythonPath = @"C:\Users\LeeBorlace\Anaconda3\envs\spacy\python.exe";
-        const string ScriptPath = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\NluTrainerDotNet\sentence_analyzer_cmd_line.py";
-        const string TemplatePath = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json";
+        //const string PythonPath = @"C:\Users\LeeBorlace\Anaconda3\envs\spacy\python.exe";
+        //const string ScriptPath = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\NluTrainerDotNet\sentence_analyzer_cmd_line.py";
+        //const string TemplatePath = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json";
+
+        const string PythonExecutablePath = @"C:\Users\lborlace\AppData\Local\Continuum\anaconda3\envs\spacy\python.exe";
+        const string ScriptPath = @"sentence_analyzer_cmd_line.py";
+        const string TemplateFolder = @"C:\Users\lborlace\Documents\GitHub\Non-Forked\logic-ml-bot\v1\nlu_training_data_generator";
+        const string TemplateFile = @"training_templates.json";
 
         const bool StubJson = false;
         const string SampleJson = @"[{'t': 'the', 'l': 'the', 'p': 'DET', 'tg': 'DT'}, {'t': 'dog', 'l': 'dog', 'p': 'NOUN', 'tg': 'NN'}, {'t': 'ate', 'l': 'eat', 'p': 'VERB', 'tg': 'VBD'}, {'t': 'the', 'l': 'the', 'p': 'DET', 'tg': 'DT'}, {'t': 'cat', 'l': 'cat', 'p': 'NOUN', 'tg': 'NN'}]";
@@ -63,7 +68,7 @@ namespace NluTrainerDotNet
                 txtOutput.Text = "Analysing...";
             }));
 
-            var analysedJson = !StubJson ? RunPythonCommand(PythonPath, ScriptPath, $@"""{(string)input}""") : SampleJson;
+            var analysedJson = !StubJson ? RunPythonCommand(PythonExecutablePath, ScriptPath, $@"""{(string)input}""") : SampleJson;
 
             if (string.IsNullOrEmpty(analysedJson))
             {
@@ -168,15 +173,11 @@ namespace NluTrainerDotNet
                     }
                 }
 
-                string backedUpFileName = $"training_templates.{DateTime.Now.Ticks}.bak.json";
-                File.Copy(TemplatePath, backedUpFileName, true);
-
-                using (StreamReader file = File.OpenText(TemplatePath))
+                using (StreamReader file = File.OpenText(System.IO.Path.Combine(TemplateFolder, TemplateFile)))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     _exampleTemplates = (List<TrainingExampleTemplate>)serializer.Deserialize(file, typeof(List<TrainingExampleTemplate>));
                     Log($"Loaded {_exampleTemplates.Count} templates");
-                    Log($"Backed up old templates to {backedUpFileName}.");
 
                     btnSaveTemplates.IsEnabled = true;
                     _templatesDirty = false;
@@ -230,14 +231,25 @@ namespace NluTrainerDotNet
 
         private void ButtonSaveTemplates_Click(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = System.Windows.MessageBox.Show("Overwrite templates?", "Save Templates", System.Windows.MessageBoxButton.YesNo);
-
-            if (messageBoxResult == MessageBoxResult.Yes)
+            try
             {
-                var json = JsonConvert.SerializeObject(_exampleTemplates);
-                System.IO.File.WriteAllText(TemplatePath, json);
-                _templatesDirty = false;
-                Log("Templates saved.");
+                var messageBoxResult = System.Windows.MessageBox.Show("Overwrite templates?", "Save Templates", System.Windows.MessageBoxButton.YesNo);
+
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    string backedUpFileName = $"training_templates.{DateTime.Now.Ticks}.bak.json";
+                    File.Copy(System.IO.Path.Combine(TemplateFolder, TemplateFile), System.IO.Path.Combine(TemplateFolder, backedUpFileName), true);
+                    Log($"Backed up old templates to {backedUpFileName}.");
+
+                    var json = JsonConvert.SerializeObject(_exampleTemplates);
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(TemplateFolder, TemplateFile), json);
+                    _templatesDirty = false;
+                    Log("Templates saved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
             }
         }
 
