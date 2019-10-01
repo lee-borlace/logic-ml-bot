@@ -127,18 +127,6 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-
-
-
-
-
-
-        
-        
-        
-        
-
-
         <StackPanel Grid.Column="1" Grid.Row="0">
             <Label Content="Tokens" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <DataGrid x:Name="dgTokens" HorizontalAlignment="Stretch" Height="320" VerticalAlignment="Top" AutoGenerateColumns="False" CanUserAddRows="false">
