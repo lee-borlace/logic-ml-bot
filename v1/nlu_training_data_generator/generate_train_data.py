@@ -93,6 +93,12 @@ def generate_data(file_name_src, file_name_tgt, count):
         language = language.replace(')', '')
         language = language.replace('-', '')
         
+        logic = template['logic'].strip()
+
+        # Skip any examples which don't have language or logic component
+        if not language or not logic :
+            continue
+
         word_dict = {}
         
         generated_language_sequence = []
@@ -182,8 +188,7 @@ def generate_data(file_name_src, file_name_tgt, count):
         # *************************************************
         # Deal with logic example
         # *************************************************        
-        logic = template['logic'].strip()
-        
+
         # Tokens to output
         generated_logic_sequence = []
         

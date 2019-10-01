@@ -53,6 +53,7 @@ namespace NluTrainerDotNet
         public MainWindow()
         {
             InitializeComponent();
+            cbSentenceType.Text = "Unknown";
         }
 
         private void BtnAnalyse_Click(object sender, RoutedEventArgs e)
@@ -561,6 +562,7 @@ namespace NluTrainerDotNet
                         txtOutput.Text = string.Empty;
                         txtExampleLanguage.Text = _currentExample.Language;
                         txtExampleLogic.Text = _currentExample.Logic;
+                        cbSentenceType.Text = !string.IsNullOrWhiteSpace(_currentExample.SentenceType) ? _currentExample.SentenceType : "Unknown";
                         dgTokens.ItemsSource = new List<NlpToken>();
 
                         SetUpSaveInsertButton();
@@ -642,6 +644,7 @@ namespace NluTrainerDotNet
                 txtOutput.Text = string.Empty;
                 txtExampleLanguage.Text = string.Empty;
                 txtExampleLogic.Text = string.Empty;
+                cbSentenceType.Text = "Unknown";
                 dgTokens.ItemsSource = null;
                 dgTokens.ItemsSource = new List<NlpToken>();
                 SetUpSaveInsertButton();
@@ -671,6 +674,7 @@ namespace NluTrainerDotNet
 
                     _currentExample.Language = existingTemplate.Language = txtExampleLanguage.Text.Trim();
                     _currentExample.Logic = existingTemplate.Logic = txtExampleLogic.Text.Trim();
+                    _currentExample.SentenceType = cbSentenceType.Text;
 
                     dgTemplates.ItemsSource = null;
                     dgTemplates.ItemsSource = _exampleTemplates;
@@ -685,8 +689,9 @@ namespace NluTrainerDotNet
                     {
                         Id = Guid.NewGuid().ToString(),
                         Language = txtExampleLanguage.Text.Trim(),
-                        Logic = txtExampleLogic.Text.Trim()
-                    };
+                        Logic = txtExampleLogic.Text.Trim(),
+                        SentenceType = cbSentenceType.Text
+                };
 
                     _exampleTemplates.Add(_currentExample);
 

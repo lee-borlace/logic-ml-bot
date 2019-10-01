@@ -13,5 +13,10 @@ namespace NluTrainerDotNet.Model
         public string Language { get; set; }
 
         public string Logic { get; set; }
+
+        /// <summary>
+        /// E.g. Statement, Question, Command, Social, Unknown
+        /// </summary>
+        public string SentenceType { get; set; }
     }
 }
