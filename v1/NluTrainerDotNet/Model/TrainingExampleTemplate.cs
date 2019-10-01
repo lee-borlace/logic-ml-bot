@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NluTrainerDotNet.Model
 {
@@ -20,5 +21,29 @@ namespace NluTrainerDotNet.Model
         /// E.g. Statement, Question, Command, Social, Unknown
         /// </summary>
         public string SentenceType { get; set; }
+
+        public Visibility ExampleTextVisibility
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(ExampleText) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        public Visibility LanguageVisibility
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(Language) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        public Visibility LogicVisibility
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(Logic) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
     }
 }

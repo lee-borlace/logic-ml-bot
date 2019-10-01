@@ -92,8 +92,9 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBox Text="{Binding Language}" />
-                                    <TextBox Text="{Binding Logic}" />
+                                    <TextBox Text="{Binding ExampleText}" Visibility="{Binding ExampleTextVisibility}" FontWeight="Bold" />
+                                    <TextBox Text="{Binding Language}" Visibility="{Binding LanguageVisibility}"/>
+                                    <TextBox Text="{Binding Logic}" Visibility="{Binding LogicVisibility}"/>
                                     <TextBox Text="{Binding SentenceType}" />
                                 </StackPanel>
                             </DataTemplate>
