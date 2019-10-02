@@ -29,11 +29,11 @@ RATE_DROP_WORD = 0.00001 # Randomly drop a word from the training example
 RATE_APPEND_QUESTION_MARK = 0.75 
 
 
-#VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-#TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
 
-VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+#VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+#TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
 
 
 def show_usage():
@@ -57,7 +57,7 @@ if(len(sys.argv) > 1):
             RATE_DROP_WORD = float(str(sys.argv[7]))
             VOCAB_PATH = str(sys.argv[8])
             TEMPLATES_PATH = str(sys.argv[9])
-            RATE_APPEND_QUESTION_MARK = str(sys.argv[10])
+            RATE_APPEND_QUESTION_MARK = float(str(sys.argv[10]))
         except:
             show_usage()
     else:
@@ -85,6 +85,9 @@ def generate_data(file_name_src, file_name_tgt, count):
     
     out_file_src = open(file_name_src, "w+", encoding="utf-8")
     out_file_tgt = open(file_name_tgt, "w+", encoding="utf-8")
+
+    language_vocab_this_file = {}
+    logic_vocab_this_file = {}
 
     for i in range(count-1) :
     
@@ -165,7 +168,6 @@ def generate_data(file_name_src, file_name_tgt, count):
                     
                     
                 generated_language_sequence.append(word_to_output)
-       
         
         # Output language sequence
         prev_token = ""
@@ -175,6 +177,9 @@ def generate_data(file_name_src, file_name_tgt, count):
         
         for language_token in generated_language_sequence :
 
+            if not language_token in language_vocab_this_file:
+                language_vocab_this_file[language_token] = True
+            
             # Check for random word swap - if swapping, then swap with the next word if there is one
             swapped_word = False
             if random.uniform(0, 1) < RATE_WORD_ORDER_SWAP :
@@ -206,7 +211,7 @@ def generate_data(file_name_src, file_name_tgt, count):
             # Should end in a question mark
             if random.uniform(0, 1) < RATE_APPEND_QUESTION_MARK :
                 if not output_string.endswith("?"):
-                    output_string = output_string + "?"
+                    output_string = output_string + " ?"
             # Should not end in a question mark
             else:
                 if output_string.endswith("?"):
@@ -252,6 +257,10 @@ def generate_data(file_name_src, file_name_tgt, count):
         # Output the logic sequence
         prev_token = ""
         for logic_token in generated_logic_sequence :
+            
+            if not logic_token in logic_vocab_this_file:
+                logic_vocab_this_file[logic_token] = True
+            
             # Make sure each token is separated from the previous one with a space
             if prev_token:
                 if( (not prev_token.endswith(" ")) and (not prev_token.endswith("\t"))):
@@ -264,6 +273,8 @@ def generate_data(file_name_src, file_name_tgt, count):
         # Finish the logic line with a newline
         out_file_tgt.write('\n')
         
+    print(f"Language vocab size : {len(language_vocab_this_file)}")
+    print(f"Logic vocab size : {len(logic_vocab_this_file)}")
         
 generate_data(ENGLISH_TRAIN, LOGIC_TRAIN, TRAIN_COUNT)
 generate_data(ENGLISH_VAL, LOGIC_VAL, VAL_COUNT)
