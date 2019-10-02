@@ -23,20 +23,30 @@ RATE_WORD_ORDER_SWAP = 0.0001 # Randomly swap the order of any word with its pre
 RATE_WRONG_POS_TAG = 0.0001 # Randomly use the wrong POS tag e.g. eat instead of ate
 RATE_DROP_WORD = 0.00001 # Randomly drop a word from the training example
 
-VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+# For examples marked as questions, this is the rate at which to ensure a question mark is on the end. This would ideally be the rate at which people
+# actually use question marks when asking a question. E.g. if you expect people to correctly use a question mark when asking a bot a question
+# 75% of the time, then set to 0.75
+RATE_APPEND_QUESTION_MARK = 0.75 
+
+
+#VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+#TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+
+VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+
 
 def show_usage():
     print("Generates training data in current directory.")
     print()
     print("Usage :")
     print()
-    print("python.exe generate_train_data.py NUM_SAMPLES TRAIN_PERCENT VAL_PERCENT TEST_PERCENT RATE_WORD_ORDER_SWAP RATE_WRONG_POS_TAG RATE_DROP_WORD VOCAB_PATH TEMPLATES_PATH")
+    print("python.exe generate_train_data.py NUM_SAMPLES TRAIN_PERCENT VAL_PERCENT TEST_PERCENT RATE_WORD_ORDER_SWAP RATE_WRONG_POS_TAG RATE_DROP_WORD VOCAB_PATH TEMPLATES_PATH RATE_APPEND_QUESTION_MARK")
     exit()
 
 # If we've passed any args at all, then make sure they're correct. If no args then we just fall back to default
 if(len(sys.argv) > 1):
-    if(len(sys.argv) == 10):
+    if(len(sys.argv) == 11):
         try:
             NUM_SAMPLES = int(str(sys.argv[1]))
             TRAIN_PERCENT = float(str(sys.argv[2]))
@@ -47,6 +57,7 @@ if(len(sys.argv) > 1):
             RATE_DROP_WORD = float(str(sys.argv[7]))
             VOCAB_PATH = str(sys.argv[8])
             TEMPLATES_PATH = str(sys.argv[9])
+            RATE_APPEND_QUESTION_MARK = str(sys.argv[10])
         except:
             show_usage()
     else:
@@ -155,8 +166,13 @@ def generate_data(file_name_src, file_name_tgt, count):
                     
                 generated_language_sequence.append(word_to_output)
        
+        
+        # Output language sequence
         prev_token = ""
         token_index = 0
+        
+        output_string = ""
+        
         for language_token in generated_language_sequence :
 
             # Check for random word swap - if swapping, then swap with the next word if there is one
@@ -174,15 +190,30 @@ def generate_data(file_name_src, file_name_tgt, count):
                 token_index += 1
                 continue
             
-            out_file_src.write(language_token)
+            output_string += language_token
             
             if token_index < len(generated_language_sequence)-1 :
-                out_file_src.write(" ")
+                output_string += " "
             token_index += 1
             
             prev_token = language_token
         
-        out_file_src.write('\n')
+        output_string = output_string.strip()
+        
+        # Determine whether or not to put a question mark at the end of a question
+        if template["SentenceType"] == "Question":
+            
+            # Should end in a question mark
+            if random.uniform(0, 1) < RATE_APPEND_QUESTION_MARK :
+                if not output_string.endswith("?"):
+                    output_string = output_string + "?"
+            # Should not end in a question mark
+            else:
+                if output_string.endswith("?"):
+                    output_string = output_string.rstrip("?")
+            
+        
+        out_file_src.write(output_string + '\n')
         
         
         # *************************************************
