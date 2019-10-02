@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:NluTrainerDotNet"
         mc:Ignorable="d"
         Title="NLU Trainer" Height="637.259" Width="1431.728"
-        WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
         >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,7 +16,8 @@
             <ColumnDefinition Width="33*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="60*" />
+            <RowDefinition Height="40*" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0">
@@ -28,7 +30,6 @@
             <TextBox x:Name="txtExampleLanguage" HorizontalAlignment="Stretch" Height="37" TextWrapping="Wrap" VerticalAlignment="Top" PreviewMouseLeftButtonDown ="TxtExampleLanguage_MouseLeftButtonDown"/>
             <Label Content="Example Logic" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25"/>
             <TextBox x:Name="txtExampleLogic" HorizontalAlignment="Stretch" Height="48" TextWrapping="Wrap" VerticalAlignment="Top" PreviewMouseLeftButtonDown ="TxtExampleLogic_MouseLeftButtonDown" />
-
             <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
                 <Button x:Name="btnLeftBracket" Content="(" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnLeftBracket_Click"/>
                 <Button x:Name="btnRightBracket" Content=")" HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnRightBracket_Click"/>
@@ -83,51 +84,8 @@
                 <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
                 <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="118" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
             </StackPanel>
-            <Grid  Margin="0 10 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80*"/>
-                    <ColumnDefinition Width="20*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <DataGrid x:Name="dgTemplates" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="0" CanUserAddRows="false" Height="400">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Example">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBox Text="{Binding ExampleText}" Visibility="{Binding ExampleTextVisibility}" FontWeight="Bold" />
-                                        <TextBox Text="{Binding Language}" Visibility="{Binding LanguageVisibility}"/>
-                                        <TextBox Text="{Binding Logic}" Visibility="{Binding LogicVisibility}"/>
-                                        <TextBox Text="{Binding SentenceType}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Select">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="btnDgAddText" Content="Select" Click="DgTemplateSelect" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Delete">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="btnDgAddText" Content="Delete" Click="DgTemplateDelete" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <StackPanel Grid.Row="0" Grid.Column="1">
-                    <Label Content="Log" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtLog" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Focusable="True" Height="150" />
-                </StackPanel>
-            </Grid>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="0">
+        <StackPanel  Grid.Row="0" Grid.Column="1">
             <Label Content="Tokens" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <DataGrid x:Name="dgTokens" HorizontalAlignment="Stretch" Height="320" VerticalAlignment="Top" AutoGenerateColumns="False" CanUserAddRows="false">
                 <DataGrid.Columns>
@@ -162,8 +120,41 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
+        <DataGrid x:Name="dgTemplates" HorizontalAlignment="Stretch"  AutoGenerateColumns="False" Grid.Row="1" Grid.Column="0" CanUserAddRows="false">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Example" Width="95*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBox Text="{Binding ExampleText}" Visibility="{Binding ExampleTextVisibility}" FontWeight="Bold" />
+                                <TextBox Text="{Binding Language}" Visibility="{Binding LanguageVisibility}" TextWrapping="Wrap" />
+                                <TextBox Text="{Binding Logic}" Visibility="{Binding LogicVisibility}" TextWrapping="Wrap"/>
+                                <TextBox Text="{Binding SentenceType}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Select" Width="5*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnDgAddText" Content="Select" Click="DgTemplateSelect" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Delete">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnDgAddText" Content="Delete" Click="DgTemplateDelete" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Label Content="Log" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtLog" HorizontalAlignment="Stretch" TextWrapping="Wrap" Focusable="True" />
+        </StackPanel>
 
-        
     </Grid>
 
 </Window>
