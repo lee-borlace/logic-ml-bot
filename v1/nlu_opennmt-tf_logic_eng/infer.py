@@ -1,6 +1,7 @@
 import os
 import argparse
 
+
 import tensorflow as tf
 import opennmt as onmt
 
@@ -14,23 +15,40 @@ import sys
 
 mode = tf.estimator.ModeKeys.PREDICT
 
-EXPORT_DIR_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_opennmt-tf\\run\\export\\latest\\1569615087"
+BASE_EXPORT_PATH = ".\\run\\export\\latest"
 
-def show_usage():
-    print("Runs the specified model interactively.")
-    print()
-    print("Usage :")
-    print()
-    print("python.exe infer_test.py EXPORT_DIR_PATH")
+if not os.path.exists(BASE_EXPORT_PATH) :
+    print(f"Path {BASE_EXPORT_PATH} doesn't exist. Exiting.")
     exit()
 
-if(len(sys.argv) > 1):
-    if(len(sys.argv) == 2):
-        EXPORT_DIR_PATH = str(sys.argv[1])
+export_folders = os.listdir(BASE_EXPORT_PATH)
+
+if len(export_folders) == 0 :
+    print(f"Path {BASE_EXPORT_PATH} doesn't contain any export folders. Exiting.")
+    exit()
+
+# Find latest export folder.
+latest_export_folder_as_int = 0
+latest_export_folder = ""
+
+for export_folder in export_folders :
+    folder_name_as_int = int(export_folder)
+    
+    if folder_name_as_int > latest_export_folder_as_int:
+        latest_export_folder_as_int = folder_name_as_int
+        latest_export_folder = export_folder
+
+if latest_export_folder_as_int == 0:
+    print("Couldn't find latest export folder. Exiting.")
+    exit()
+
+export_dir_path = BASE_EXPORT_PATH + "\\" + latest_export_folder
+
+print(f"Using export path {export_dir_path}.")
 
 with tf.Session() as sess:
     meta_graph_def = tf.saved_model.loader.load(
-        sess, [tf.saved_model.tag_constants.SERVING], EXPORT_DIR_PATH)
+        sess, [tf.saved_model.tag_constants.SERVING], export_dir_path)
     
     signature_def = meta_graph_def.signature_def["serving_default"]
 
