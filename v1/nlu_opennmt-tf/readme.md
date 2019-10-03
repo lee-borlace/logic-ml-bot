@@ -11,20 +11,20 @@ https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md
 # English to logic training
 ## Training (small)
 `onmt-main train_and_eval --model_type NMTSmall --auto_config --config NMTSmall_eng_logic.yml`
-`tensorboard --logdir="run"` - have to hit at localhost:6006
+`tensorboard --logdir="run-eng-logic"` - have to hit at localhost:6006
 
 ## Training (Transformer)
 `onmt-main train_and_eval --model_type Transformer --auto_config --config Transformer_eng_logic.yml`
-`tensorboard --logdir="run"` - have to hit at localhost:6006
+`tensorboard --logdir="run-eng-logic"` - have to hit at localhost:6006
 
 # Logic to English training
 ## Training (small)
 `onmt-main train_and_eval --model_type NMTSmall --auto_config --config NMTSmall_logic_eng.yml`
-`tensorboard --logdir="run"` - have to hit at localhost:6006
+`tensorboard --logdir="run-logic-eng"` - have to hit at localhost:6006
 
 ## Training (Transformer)
 `onmt-main train_and_eval --model_type Transformer --auto_config --config Transformer_logic_eng.yml`
-`tensorboard --logdir="run"` - have to hit at localhost:6006
+`tensorboard --logdir="run-logic-eng"` - have to hit at localhost:6006
 
 # Inferring (using latest export)
 `python infer.py run-logic-eng`
