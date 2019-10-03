@@ -29,11 +29,11 @@ RATE_DROP_WORD = 0.00001 # Randomly drop a word from the training example
 RATE_APPEND_QUESTION_MARK = 0.75 
 
 
-#VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-#TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
 
-VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+#VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+#TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
 
 
 def show_usage():
@@ -292,11 +292,13 @@ def generate_data(file_name_src, file_name_tgt, count):
         # Iterate through matches
         for match in matches:
             
-            # If the first element of the is present then we have a POS, so try to match it back
+            # If the first element of the is present then we have a POS or another special constant, so try to match it back
             if(match[0]) :
                 token = match[0].strip()
                 if(token in word_dict) :
                     token_to_output = word_dict[token].capitalize()
+                else:
+                    token_to_output = token
 
             # Else not present - we don't have a POS, so just search for the first element of the match which
             # is present and output that
