@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,18 +19,16 @@ namespace NluTrainerDotNet.Model
         public string Logic { get; set; }
 
         /// <summary>
+        /// Frequency this example should be generated. 1-10. 1 = not frequent, 10 = very frequent
+        /// </summary>
+        public int Frequency { get; set; }
+
+        /// <summary>
         /// E.g. Statement, Question, Command, Social, Unknown
         /// </summary>
         public string SentenceType { get; set; }
 
-        public Visibility ExampleTextVisibility
-        {
-            get
-            {
-                return string.IsNullOrWhiteSpace(ExampleText) ? Visibility.Collapsed : Visibility.Visible;
-            }
-        }
-
+        [JsonIgnore]
         public Visibility LanguageVisibility
         {
             get
@@ -38,11 +37,26 @@ namespace NluTrainerDotNet.Model
             }
         }
 
+        [JsonIgnore]
         public Visibility LogicVisibility
         {
             get
             {
                 return string.IsNullOrWhiteSpace(Logic) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        [JsonIgnore]
+        public string DisplayName
+        {
+            get
+            {
+                var baseDescr = !string.IsNullOrWhiteSpace(ExampleText) ? ExampleText : Language;
+                return $"{baseDescr} ({Frequency})";
+            }
+            set
+            {
+               
             }
         }
     }
