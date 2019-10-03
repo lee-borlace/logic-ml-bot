@@ -3,7 +3,7 @@ import random
 import re
 import sys
 
-NUM_SAMPLES = 100000
+NUM_SAMPLES = 10000
 
 TRAIN_PERCENT = 0.7
 VAL_PERCENT = 0.15
@@ -29,11 +29,11 @@ RATE_DROP_WORD = 0.00001 # Randomly drop a word from the training example
 RATE_APPEND_QUESTION_MARK = 0.75 
 
 
-VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+#VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+#TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
 
-#VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-#TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
+TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
 
 
 def show_usage():
@@ -78,6 +78,63 @@ print("Done.")
 # Load templates
 with open(TEMPLATES_PATH) as json_file:
     training_templates = json.load(json_file)
+
+# Put templates in a dictionary keyed by frequency. Note that this has keys with range 1-10 inclusive
+template_freq_dict = {}
+for i in range(10) :
+    template_freq_dict[i+1] = []
+
+for template in training_templates :
+     template_freq_dict[template["Frequency"]].append(template) 
+
+
+ # Select a random frequency. The chance of selecting that frequency increases
+ # with the freq, i.e. 10 will be selected more often than 1. TODO : This needs a more elegant / configurable solution!!
+def get_random_frequency() :
+    rand_number = random.randint(0,101)
+    selected_frequency = 1
+    
+    if rand_number <= 1.8:
+        selected_frequency = 1
+    elif rand_number <= 5.4 :
+        selected_frequency = 2
+    elif rand_number <= 10.8 :
+        selected_frequency = 3        
+    elif rand_number <= 18 :
+        selected_frequency = 4
+    elif rand_number <= 27 :
+        selected_frequency = 5
+    elif rand_number <= 37.8 :
+        selected_frequency = 6
+    elif rand_number <= 50.4 :
+        selected_frequency = 7
+    elif rand_number <= 64.8 :
+        selected_frequency = 8    
+    elif rand_number <= 81 :
+        selected_frequency = 9  
+    else :
+        selected_frequency = 10    
+        
+    return selected_frequency
+
+# Get a random template. The chance of getting any particular template
+# depends on its frequency. 
+def get_random_template() :
+
+    freq = get_random_frequency()
+    template_count_for_freq = len(template_freq_dict[freq])
+    
+    # If we get a freq with no templates against it, pick another one till we
+    # get one with templates
+    while template_count_for_freq == 0 :
+        freq = get_random_frequency()
+        template_count_for_freq = len(template_freq_dict[freq])
+      
+    # Grab a random template index for the chosen frequency
+    random_template_index = random.randrange(0, template_count_for_freq)
+    
+    return template_freq_dict[freq][random_template_index]
+
     
 # Data generation function
 def generate_data(file_name_src, file_name_tgt, count):
@@ -92,8 +149,7 @@ def generate_data(file_name_src, file_name_tgt, count):
     for i in range(count-1) :
     
         # Grab a random example index
-        index = random.randrange(0, len(training_templates))
-        template = training_templates[index]
+        template = get_random_template()
         
         # *************************************************
         # Deal with language example
