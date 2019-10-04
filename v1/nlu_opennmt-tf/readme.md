@@ -52,3 +52,8 @@ Had to keep revising the batch size down until it would fit in the GPU!
 
 # Inferring (using latest export)
 `python infer.py run-logic-eng`
+
+# Ideas to improve performance
+- Use bigger vocab when generating samples - I think we're limiting it to too small a number given the number of examples
+- More example templates!
+- Use a smaller vocab when prepping the data for training - see what the ratio is for WMT sample for train / val / test batch sizes as well as the vocab for each
