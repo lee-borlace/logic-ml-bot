@@ -53,6 +53,10 @@
                 <Button x:Name="btnConst4" Content="Const4," HorizontalAlignment="Left"  VerticalAlignment="Top" Width="53" RenderTransformOrigin="3.879,0.607" Click="BtnConst4_Click"/>
                 <Button x:Name="btnConst5" Content="Const5," HorizontalAlignment="Left"  VerticalAlignment="Top" Width="53" RenderTransformOrigin="0.687,2.14" Click="BtnConst5_Click"/>
                 <Button x:Name="btnConst6" Content="Const6," HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Click="BtnConst6_Click"/>
+                <Button x:Name="btnPredConst1" Content="PredConst1," HorizontalAlignment="Left"  VerticalAlignment="Top" Click="BtnPredConst1_Click"/>
+                <Button x:Name="btnPredConst2" Content="PredConst2," HorizontalAlignment="Left"  VerticalAlignment="Top" Click="BtnPredConst2_Click"/>
+                <Button x:Name="btnPredConst3" Content="PredConst3," HorizontalAlignment="Left"  VerticalAlignment="Top" Click="BtnPredConst3_Click"/>
+                <Button x:Name="btnPredConst4" Content="PredConst4," HorizontalAlignment="Left"  VerticalAlignment="Top" Click="BtnPredConst4_Click"/>
                 <Button x:Name="btnX" Content="x," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnX_Click"/>
                 <Button x:Name="btnY" Content="y," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnY_Click"/>
                 <Button x:Name="btnZ" Content="z," HorizontalAlignment="Left" VerticalAlignment="Top" Width="38" Click="BtnZ_Click"/>
@@ -67,6 +71,8 @@
                 <Button x:Name="btnShe" Content="She" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="39" Click="BtnShe_Click"/>
                 <Button x:Name="btnIt" Content="It" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="41" Click="BtnIt_Click"/>
                 <Button x:Name="btnThey" Content="They" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="42"  Click="BtnThey_Click"/>
+                <Button x:Name="btnThis" Content="This" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="42"  Click="BtnThis_Click"/>
+                <Button x:Name="btnThat" Content="That" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="42"  Click="BtnThat_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"  Margin="0 20 0 0">
                 <Label Content="Sentence Type" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24"/>
@@ -95,10 +101,13 @@
                 <Button x:Name="btnSaveInsert" Content="Insert Example" HorizontalAlignment="Left" VerticalAlignment="Top" Width="108" Click="BtnSaveInsert_Click"/>
                 <Button x:Name="btnNewExample" Content="New Example" HorizontalAlignment="Left" VerticalAlignment="Top" Width="108" Click="BtnNewExample_Click"/>
                 <Button x:Name="btnInsertAndNewExample" Content="Save and New" HorizontalAlignment="Left" VerticalAlignment="Top" Width="108" Click="BtnInsertAndNewExample_Click"/>
+                <Button x:Name="btnClone" Content="Clone" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnClone_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
                 <Button x:Name="btnLoadTemplates" Content="Load Templates" HorizontalAlignment="Left" VerticalAlignment="Top" Width="109" Click="BtnLoadTemplates_Click"/>
                 <Button x:Name="btnSaveTemplates" Content="Save Templates&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="118" Height="20" Click="ButtonSaveTemplates_Click" IsEnabled="False"/>
+                <CheckBox x:Name="chkUnfinishedOnly" Checked="ChkUnfinishedOnly_CheckChanged" Unchecked="ChkUnfinishedOnly_CheckChanged" />
+                <Label Content=" Unfinished only?"  />
             </StackPanel>
         </StackPanel>
         <StackPanel  Grid.Row="0" Grid.Column="1">
@@ -133,17 +142,17 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="POS">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="btnDgAddPos" Content="POS" Click="DgAddPos" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Text/Lemma">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="btnDgAddTextLemma" Content="Txt/Lemma" Click="DgAddTextLemma" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="POS">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnDgAddPos" Content="POS" Click="DgAddPos" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

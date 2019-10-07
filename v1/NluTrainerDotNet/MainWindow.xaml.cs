@@ -40,7 +40,8 @@ namespace NluTrainerDotNet
         const string SampleJson = @"[{'t': 'the', 'l': 'the', 'p': 'DET', 'tg': 'DT'}, {'t': 'dog', 'l': 'dog', 'p': 'NOUN', 'tg': 'NN'}, {'t': 'ate', 'l': 'eat', 'p': 'VERB', 'tg': 'VBD'}, {'t': 'the', 'l': 'the', 'p': 'DET', 'tg': 'DT'}, {'t': 'cat', 'l': 'cat', 'p': 'NOUN', 'tg': 'NN'}]";
 
         private List<NlpToken> _tokensFromLastAnalysis;
-        private List<TrainingExampleTemplate> _exampleTemplates;
+        private List<TrainingExampleTemplate> _filteredTemplates;
+        private List<TrainingExampleTemplate> _allTemplates;
         private LastFocusedControl _lastFocusedControl = LastFocusedControl.Language;
 
         private int _caretIndexLanguage = 0;
@@ -56,6 +57,8 @@ namespace NluTrainerDotNet
         const string PronThey = "They_DJE9FIR2";
         const string PronListener = "Listener_HDI92HED";
         const string PronSpeaker = "Speaker_DH7WHD7D";
+        const string PronThis = "This_FF8FFO45";
+        const string PronThat = "That_3049FJ3D";
 
         public MainWindow()
         {
@@ -180,13 +183,16 @@ namespace NluTrainerDotNet
                 using (StreamReader file = File.OpenText(System.IO.Path.Combine(TemplateFolder, TemplateFile)))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    _exampleTemplates = (List<TrainingExampleTemplate>)serializer.Deserialize(file, typeof(List<TrainingExampleTemplate>));
-                    Log($"Loaded {_exampleTemplates.Count} templates");
+                    _allTemplates = (List<TrainingExampleTemplate>)serializer.Deserialize(file, typeof(List<TrainingExampleTemplate>));
+                    Log($"Loaded {_allTemplates.Count} templates");
+
+                    _filteredTemplates = new List<TrainingExampleTemplate>(_allTemplates);
+                    chkUnfinishedOnly.IsChecked = false;
 
                     btnSaveTemplates.IsEnabled = true;
                     _templatesDirty = false;
 
-                    dgTemplates.ItemsSource = _exampleTemplates;
+                    dgTemplates.ItemsSource = _filteredTemplates;
                     _currentExample = null;
                 }
             }
@@ -241,7 +247,7 @@ namespace NluTrainerDotNet
                 File.Copy(System.IO.Path.Combine(TemplateFolder, TemplateFile), System.IO.Path.Combine(TemplateFolder, backedUpFileName), true);
                 Log($"Backed up old templates to {backedUpFileName}.");
 
-                var json = JsonConvert.SerializeObject(_exampleTemplates);
+                var json = JsonConvert.SerializeObject(_allTemplates);
                 System.IO.File.WriteAllText(System.IO.Path.Combine(TemplateFolder, TemplateFile), json);
                 _templatesDirty = false;
                 Log("Templates saved.");
@@ -434,6 +440,18 @@ namespace NluTrainerDotNet
             InsertToSelectedTextBox($"{PronThey}, ");
         }
 
+        private void BtnThis_Click(object sender, RoutedEventArgs e)
+        {
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"{PronThis}, ");
+        }
+
+        private void BtnThat_Click(object sender, RoutedEventArgs e)
+        {
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"{PronThat}, ");
+        }
+
         private void BtnOwns_Click(object sender, RoutedEventArgs e)
         {
 
@@ -446,6 +464,30 @@ namespace NluTrainerDotNet
 
             _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox($"TheArticle(");
+        }
+
+        private void BtnPredConst1_Click(object sender, RoutedEventArgs e)
+        {
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"PredConst1, ");
+        }
+
+        private void BtnPredConst2_Click(object sender, RoutedEventArgs e)
+        {
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"PredConst2, ");
+        }
+
+        private void BtnPredConst3_Click(object sender, RoutedEventArgs e)
+        {
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"PredConst3, ");
+        }
+
+        private void BtnPredConst4_Click(object sender, RoutedEventArgs e)
+        {
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"PredConst4, ");
         }
 
         void InsertToSelectedTextBox(string textToInsert, bool mayHaveSpaceBefore = true, bool capitaliseForLogicBox = true)
@@ -650,9 +692,9 @@ namespace NluTrainerDotNet
                             txtExampleLogic.Text = string.Empty;
                             dgTokens.ItemsSource = new List<NlpToken>();
 
-                            _exampleTemplates = _exampleTemplates.Where(t => t.Id != template.Id).ToList();
+                            _filteredTemplates = _filteredTemplates.Where(t => t.Id != template.Id).ToList();
                             dgTemplates.ItemsSource = null;
-                            dgTemplates.ItemsSource = _exampleTemplates;
+                            dgTemplates.ItemsSource = _filteredTemplates;
                             _templatesDirty = true;
 
                             _currentExample = null;
@@ -718,29 +760,14 @@ namespace NluTrainerDotNet
                     return;
                 }
 
-                if (_exampleTemplates == null)
+                if (_filteredTemplates == null)
                 {
                     LoadTemplates();
                 }
 
                 if (_currentExample != null)
                 {
-                    _templatesDirty = true;
-
-                    var existingTemplate = _exampleTemplates.First(t => t.Id == _currentExample.Id);
-
-                    _currentExample.ExampleText = txtInput.Text;
-                    _currentExample.Language = existingTemplate.Language = txtExampleLanguage.Text.Trim();
-                    _currentExample.Logic = existingTemplate.Logic = txtExampleLogic.Text.Trim();
-                    _currentExample.SentenceType = cbSentenceType.Text;
-
-                    int.TryParse(cbFrequency.Text, out int frequency);
-                    _currentExample.Frequency = frequency;
-
-                    dgTemplates.ItemsSource = null;
-                    dgTemplates.ItemsSource = _exampleTemplates;
-
-                    SetUpSaveInsertButton();
+                    DoUpdate();
                 }
                 else
                 {
@@ -752,6 +779,47 @@ namespace NluTrainerDotNet
                 Log(ex);
             }
         }
+
+        private void DoUpdate()
+        {
+            _templatesDirty = true;
+
+            var existingTemplate = _filteredTemplates.First(t => t.Id == _currentExample.Id);
+
+            _currentExample.ExampleText = txtInput.Text;
+            _currentExample.Language = existingTemplate.Language = txtExampleLanguage.Text.Trim();
+            _currentExample.Logic = existingTemplate.Logic = txtExampleLogic.Text.Trim();
+            _currentExample.SentenceType = cbSentenceType.Text;
+
+            int.TryParse(cbFrequency.Text, out int frequency);
+            _currentExample.Frequency = frequency;
+
+            dgTemplates.ItemsSource = null;
+            dgTemplates.ItemsSource = _filteredTemplates;
+
+            SetUpSaveInsertButton();
+        }
+
+        private void BtnClone_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CleanFormatting();
+
+                if (!Validate())
+                {
+                    return;
+                }
+
+                DoInsert();
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+       
 
         private bool Validate()
         {
@@ -784,7 +852,19 @@ namespace NluTrainerDotNet
             _templatesDirty = true;
 
             int.TryParse(cbFrequency.Text, out int frequency);
+            SaveNewExample(frequency);
 
+            _filteredTemplates.Add(_currentExample);
+
+            dgTemplates.ItemsSource = null;
+            dgTemplates.ItemsSource = _filteredTemplates;
+
+
+            SetUpSaveInsertButton();
+        }
+
+        private void SaveNewExample(int frequency)
+        {
             _currentExample = new TrainingExampleTemplate()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -794,14 +874,6 @@ namespace NluTrainerDotNet
                 ExampleText = txtInput.Text,
                 Frequency = frequency
             };
-
-            _exampleTemplates.Add(_currentExample);
-
-            dgTemplates.ItemsSource = null;
-            dgTemplates.ItemsSource = _exampleTemplates;
-
-
-            SetUpSaveInsertButton();
         }
 
         private void BtnInsertAndNewExample_Click(object sender, RoutedEventArgs e)
@@ -839,6 +911,18 @@ namespace NluTrainerDotNet
             }
         }
 
+        private void ChkUnfinishedOnly_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            if((sender as CheckBox).IsChecked.HasValue && (sender as CheckBox).IsChecked.Value)
+            {
+                _filteredTemplates = new List<TrainingExampleTemplate>(_allTemplates.Where(t => string.IsNullOrWhiteSpace(t.Language) || string.IsNullOrWhiteSpace(t.Logic)));
+            }
+            else
+            {
+                _filteredTemplates = new List<TrainingExampleTemplate>(_allTemplates);
+            }
 
+            dgTemplates.ItemsSource = _filteredTemplates;
+        }
     }
 }
