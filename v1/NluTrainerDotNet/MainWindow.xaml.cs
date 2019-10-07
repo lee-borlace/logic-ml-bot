@@ -434,6 +434,20 @@ namespace NluTrainerDotNet
             InsertToSelectedTextBox($"{PronThey}, ");
         }
 
+        private void BtnOwns_Click(object sender, RoutedEventArgs e)
+        {
+
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"Owns(");
+        }
+
+        private void BtnTheArticle_Click(object sender, RoutedEventArgs e)
+        {
+
+            _lastFocusedControl = LastFocusedControl.Logic;
+            InsertToSelectedTextBox($"TheArticle(");
+        }
+
         void InsertToSelectedTextBox(string textToInsert, bool mayHaveSpaceBefore = true, bool capitaliseForLogicBox = true)
         {
             try
@@ -824,5 +838,7 @@ namespace NluTrainerDotNet
                 }
             }
         }
+
+
     }
 }
