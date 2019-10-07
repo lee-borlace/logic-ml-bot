@@ -27,11 +27,11 @@ namespace NluTrainerDotNet
     /// </summary>
     public partial class MainWindow : Window
     {
-        //const string PythonExecutablePath = @"C:\Users\lborlace\AppData\Local\Continuum\anaconda3\envs\spacy\python.exe";
-        //const string TemplateFolder = @"C:\Users\lborlace\Documents\GitHub\Non-Forked\logic-ml-bot\v1\nlu_training_data_generator";
+        const string PythonExecutablePath = @"C:\Users\lborlace\AppData\Local\Continuum\anaconda3\envs\spacy\python.exe";
+        const string TemplateFolder = @"C:\Users\lborlace\Documents\GitHub\Non-Forked\logic-ml-bot\v1\nlu_training_data_generator";
 
-        const string PythonExecutablePath = @"C:\Users\LeeBorlace\Anaconda3\envs\spacy\python.exe";
-        const string TemplateFolder = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator";
+        //const string PythonExecutablePath = @"C:\Users\LeeBorlace\Anaconda3\envs\spacy\python.exe";
+        //const string TemplateFolder = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator";
 
         const string ScriptPath = @"sentence_analyzer_cmd_line.py";
         const string TemplateFile = @"training_templates.json";
@@ -61,6 +61,7 @@ namespace NluTrainerDotNet
         {
             InitializeComponent();
             cbSentenceType.Text = "Unknown";
+            LoadTemplates();
         }
 
         private void BtnAnalyse_Click(object sender, RoutedEventArgs e)
@@ -558,7 +559,7 @@ namespace NluTrainerDotNet
                         var row = (DataGridRow)vis;
                         var token = row.DataContext as NlpToken;
 
-                        switch(_lastFocusedControl)
+                        switch (_lastFocusedControl)
                         {
                             case LastFocusedControl.Language:
                                 InsertToSelectedTextBox(token.TokenForLanguage + " ");
@@ -667,7 +668,7 @@ namespace NluTrainerDotNet
             }
             else
             {
-                btnSaveInsert.Content = "Save Example";
+                btnSaveInsert.Content = "Update Example";
             }
         }
 
@@ -696,21 +697,10 @@ namespace NluTrainerDotNet
         {
             try
             {
-                // Do some cleanup
-                txtExampleLogic.Text = txtExampleLogic.Text.Replace(",)", ")");
-                txtExampleLogic.Text = txtExampleLogic.Text.Replace(", )", ")");
-                txtExampleLogic.Text = txtExampleLogic.Text.Replace(",  )", ")");
+                CleanFormatting();
 
-                // Do some validation.
-                if (txtExampleLogic.Text.Count(f => f == '(') != txtExampleLogic.Text.Count(f => f == ')'))
+                if (!Validate())
                 {
-                    MessageBox.Show("Bracket mismatch in logic example!");
-                    return;
-                }
-
-                if ((string.IsNullOrWhiteSpace(txtExampleLanguage.Text) || string.IsNullOrWhiteSpace(txtExampleLogic.Text)) && string.IsNullOrWhiteSpace(txtInput.Text))
-                {
-                    MessageBox.Show("If you don't specify language or logic, then you must specify example!");
                     return;
                 }
 
@@ -740,28 +730,78 @@ namespace NluTrainerDotNet
                 }
                 else
                 {
-                    _templatesDirty = true;
-
-                    int.TryParse(cbFrequency.Text, out int frequency);
-
-                    _currentExample = new TrainingExampleTemplate()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Language = txtExampleLanguage.Text.Trim(),
-                        Logic = txtExampleLogic.Text.Trim(),
-                        SentenceType = cbSentenceType.Text,
-                        ExampleText = txtInput.Text,
-                        Frequency = frequency
-                    };
-
-                    _exampleTemplates.Add(_currentExample);
-
-                    dgTemplates.ItemsSource = null;
-                    dgTemplates.ItemsSource = _exampleTemplates;
-
-
-                    SetUpSaveInsertButton();
+                    DoInsert();
                 }
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+            }
+        }
+
+        private bool Validate()
+        {
+            // Do some validation.
+            if (txtExampleLogic.Text.Count(f => f == '(') != txtExampleLogic.Text.Count(f => f == ')'))
+            {
+                MessageBox.Show("Bracket mismatch in logic example!");
+                return false;
+            }
+
+            if ((string.IsNullOrWhiteSpace(txtExampleLanguage.Text) || string.IsNullOrWhiteSpace(txtExampleLogic.Text)) && string.IsNullOrWhiteSpace(txtInput.Text))
+            {
+                MessageBox.Show("If you don't specify language or logic, then you must specify example!");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void CleanFormatting()
+        {
+            // Do some cleanup
+            txtExampleLogic.Text = txtExampleLogic.Text.Replace(",)", ")");
+            txtExampleLogic.Text = txtExampleLogic.Text.Replace(", )", ")");
+            txtExampleLogic.Text = txtExampleLogic.Text.Replace(",  )", ")");
+        }
+
+        private void DoInsert()
+        {
+            _templatesDirty = true;
+
+            int.TryParse(cbFrequency.Text, out int frequency);
+
+            _currentExample = new TrainingExampleTemplate()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Language = txtExampleLanguage.Text.Trim(),
+                Logic = txtExampleLogic.Text.Trim(),
+                SentenceType = cbSentenceType.Text,
+                ExampleText = txtInput.Text,
+                Frequency = frequency
+            };
+
+            _exampleTemplates.Add(_currentExample);
+
+            dgTemplates.ItemsSource = null;
+            dgTemplates.ItemsSource = _exampleTemplates;
+
+
+            SetUpSaveInsertButton();
+        }
+
+        private void BtnInsertAndNewExample_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CleanFormatting();
+
+                if (!Validate())
+                {
+                    return;
+                }
+
+                DoInsert();
             }
             catch (Exception ex)
             {
@@ -784,7 +824,5 @@ namespace NluTrainerDotNet
                 }
             }
         }
-
-
     }
 }
