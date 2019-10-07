@@ -255,151 +255,181 @@ namespace NluTrainerDotNet
 
         private void BtnLeftBracket_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("(", false);
         }
 
         private void BtnRightBracket_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox(") ", false);
         }
 
         private void BtnImplies_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("=> ");
         }
 
         private void BtnComma_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox(", ", false);
         }
 
         private void BtnAnd_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("AND ");
         }
 
         private void BtnOr_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("OR ");
         }
 
         private void BtnNot_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("NOT ");
         }
 
         private void BtnConst1_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Const1, ");
         }
 
         private void BtnConst2_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Const2, ");
         }
 
         private void BtnConst3_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Const3, ");
         }
 
         private void BtnConst4_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Const4, ");
         }
 
         private void BtnConst5_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Const5, ");
         }
 
         private void BtnConst6_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Const6, ");
         }
 
         private void BtnX_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("x, ", capitaliseForLogicBox: false);
         }
 
         private void BtnY_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("y, ", capitaliseForLogicBox: false);
         }
 
         private void BtnZ_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("z, ", capitaliseForLogicBox: false);
         }
 
         private void BtnA_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("a, ", capitaliseForLogicBox: false);
         }
 
         private void BtnB_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("b, ", capitaliseForLogicBox: false);
         }
 
         private void BtnC_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("c, ", capitaliseForLogicBox: false);
         }
 
         private void BtnInstance_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Instance(");
         }
 
         private void BtnVerb_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Verb(");
         }
 
         private void BtnAdverb_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Adverb(");
         }
 
         private void BtnVerbTense_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("VerbTense(");
         }
 
         private void BtnAdjective_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox("Adjective(");
         }
 
         private void BtnSpeaker_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox($"{PronSpeaker}, ");
         }
 
         private void BtnListener_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox($"{PronListener}, ");
         }
 
         private void BtnHe_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox($"{PronHe}, ");
         }
 
         private void BtnShe_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox($"{PronShe}, ");
         }
 
         private void BtnIt_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox($"{PronIt}, ");
         }
 
         private void BtnThey_Click(object sender, RoutedEventArgs e)
         {
+            _lastFocusedControl = LastFocusedControl.Logic;
             InsertToSelectedTextBox($"{PronThey}, ");
         }
 
@@ -486,7 +516,7 @@ namespace NluTrainerDotNet
 
         #region  Analysis data grid
 
-        private void DgAddText(object sender, RoutedEventArgs e)
+        private void DgAddTextLemma(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -497,7 +527,15 @@ namespace NluTrainerDotNet
                         var row = (DataGridRow)vis;
                         var token = row.DataContext as NlpToken;
 
-                        InsertToSelectedTextBox(token.Text + " ");
+                        switch (_lastFocusedControl)
+                        {
+                            case LastFocusedControl.Language:
+                                InsertToSelectedTextBox(token.TextContent + " ");
+                                break;
+                            case LastFocusedControl.Logic:
+                                InsertToSelectedTextBox(token.Lemma + " ");
+                                break;
+                        }
 
                         break;
                     }
@@ -509,7 +547,7 @@ namespace NluTrainerDotNet
             }
         }
 
-        private void DgAddLemma(object sender, RoutedEventArgs e)
+        private void DgAddPos(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -520,53 +558,15 @@ namespace NluTrainerDotNet
                         var row = (DataGridRow)vis;
                         var token = row.DataContext as NlpToken;
 
-                        InsertToSelectedTextBox(token.Lemma + " ");
-
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log(ex);
-            }
-        }
-
-        private void DgAddLanguageToken(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                {
-                    if (vis is DataGridRow)
-                    {
-                        var row = (DataGridRow)vis;
-                        var token = row.DataContext as NlpToken;
-
-                        InsertToSelectedTextBox(token.TokenForLanguage + " ");
-
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log(ex);
-            }
-        }
-
-        private void DgAddLogicToken(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                {
-                    if (vis is DataGridRow)
-                    {
-                        var row = (DataGridRow)vis;
-                        var token = row.DataContext as NlpToken;
-
-                        InsertToSelectedTextBox(token.TokenForLogic + ", ");
+                        switch(_lastFocusedControl)
+                        {
+                            case LastFocusedControl.Language:
+                                InsertToSelectedTextBox(token.TokenForLanguage + " ");
+                                break;
+                            case LastFocusedControl.Logic:
+                                InsertToSelectedTextBox(token.TokenForLogic + " ");
+                                break;
+                        }
 
                         break;
                     }

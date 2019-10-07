@@ -105,28 +105,42 @@
                     <DataGridTemplateColumn Header="Text">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnDgAddText" Content="{Binding Text}" Click="DgAddText" />
+                                <Label Content="{Binding TextContent}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Lemma">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnDgAddText" Content="{Binding Lemma}" Click="DgAddLemma" />
+                                <Label Content="{Binding Lemma}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Language Token">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnDgAddText" Content="{Binding TokenForLanguageForButton}" Click="DgAddLanguageToken" />
+                                <Label Content="{Binding TokenForLanguageForButton}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Logic Token">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnDgAddText" Content="{Binding TokenForLogicForButton}" Click="DgAddLogicToken" />
+                                <Label Content="{Binding TokenForLogicForButton}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="POS">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnDgAddPos" Content="POS" Click="DgAddPos" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Text/Lemma">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="btnDgAddTextLemma" Content="Txt/Lemma" Click="DgAddTextLemma" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

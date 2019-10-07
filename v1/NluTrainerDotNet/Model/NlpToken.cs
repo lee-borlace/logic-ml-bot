@@ -10,7 +10,7 @@ namespace NluTrainerDotNet.Model
     public class NlpToken
     {
         [JsonProperty("t")]
-        public string Text { get; set; }
+        public string TextContent { get; set; }
 
         [JsonProperty("l")]
         public string Lemma { get; set; }
