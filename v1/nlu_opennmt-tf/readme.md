@@ -46,9 +46,20 @@ Loss bottomed out about 1.4
 `onmt-build-vocab --size 29640 --save_vocab english-vocab.txt english-train.txt`
 `onmt-build-vocab --size 27261 --save_vocab logic-vocab.txt logic-train.txt`
 `onmt-main train_and_eval --model_type TransformerBig --auto_config --config Transformer_big_logic_eng.yml`
-`tensorboard --logdir="run-logic-eng"`
 
 Had to keep revising the batch size down until it would fit in the GPU!
+
+Gave up, was not able to get it to run on the GPU, even with small batch sizes. Maybe there are other params to adjust?
+
+### Attempt 2 (Transformer, more data, different train/eval ratio)
+`python ..\nlu_training_data_generator\generate_train_data.py 1000000 0.63 0.19 0.18 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75`
+
+`onmt-build-vocab --size 29640 --save_vocab english-vocab.txt english-train.txt`
+`onmt-build-vocab --size 27261 --save_vocab logic-vocab.txt logic-train.txt`
+`onmt-main train_and_eval --model_type Transformer --auto_config --config Transformer_logic_eng.yml`
+`tensorboard --logdir="run-logic-eng"`
+
+Same deal - loss bottomed out at about 1.4
 
 # Inferring (using latest export)
 `python infer.py run-logic-eng`
@@ -57,3 +68,6 @@ Had to keep revising the batch size down until it would fit in the GPU!
 - Use bigger vocab when generating samples - I think we're limiting it to too small a number given the number of examples
 - More example templates!
 - Use a smaller vocab when prepping the data for training - see what the ratio is for WMT sample for train / val / test batch sizes as well as the vocab for each
+
+
+

@@ -12,4 +12,4 @@ eval:
   eval_delay: 1800  # Every 30 min
 
 train:
-  batch_size: 256
+  batch_size: 8
