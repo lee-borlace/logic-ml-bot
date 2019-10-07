@@ -743,7 +743,6 @@ namespace NluTrainerDotNet
                     _templatesDirty = true;
 
                     int.TryParse(cbFrequency.Text, out int frequency);
-                    _currentExample.Frequency = frequency;
 
                     _currentExample = new TrainingExampleTemplate()
                     {
