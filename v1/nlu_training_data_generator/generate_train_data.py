@@ -146,9 +146,7 @@ def get_random_template() :
         template_count_for_freq = len(template_freq_dict[freq])
       
     # Grab a random template index for the chosen frequency
-    
-    # random_template_index = random.randrange(0, template_count_for_freq)
-    random_template_index = normal_distribution_random(0, template_count_for_freq-1)
+    random_template_index = random.randrange(0, template_count_for_freq)
     
     return template_freq_dict[freq][random_template_index]
 
@@ -217,10 +215,7 @@ def generate_data(file_name_src, file_name_tgt, count):
                         # Check whether to randomly make an error for the POS tag
                         if random.uniform(0, 1) < RATE_WRONG_POS_TAG :
                             tag_length_for_pos = len(vocab[pos].keys())
-                            
-                            #random_tag_index = random.randrange(0, tag_length_for_pos)
-                            random_tag_index = normal_distribution_random(0, tag_length_for_pos-1)
-                            
+                            random_tag_index = random.randrange(0, tag_length_for_pos)
                             tag = list(vocab[pos].keys())[random_tag_index]
                         
                         # We have the tag in the vocab dict against the POS
