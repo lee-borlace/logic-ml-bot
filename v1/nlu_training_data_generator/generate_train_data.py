@@ -29,6 +29,7 @@ RATE_DROP_WORD = 0.00001 # Randomly drop a word from the training example
 # 75% of the time, then set to 0.75
 RATE_APPEND_QUESTION_MARK = 0.75 
 
+OUTPUT_PATH = "."
 
 VOCAB_FILE_NAME = "vocab.100k.json"
 TEMPLATES_FILE_NAME = "training_templates.json"
@@ -54,12 +55,12 @@ def show_usage():
     print()
     print("Usage :")
     print()
-    print("python.exe generate_train_data.py NUM_SAMPLES TRAIN_PERCENT VAL_PERCENT TEST_PERCENT RATE_WORD_ORDER_SWAP RATE_WRONG_POS_TAG RATE_DROP_WORD VOCAB_PATH TEMPLATES_PATH RATE_APPEND_QUESTION_MARK")
+    print("python.exe generate_train_data.py NUM_SAMPLES TRAIN_PERCENT VAL_PERCENT TEST_PERCENT RATE_WORD_ORDER_SWAP RATE_WRONG_POS_TAG RATE_DROP_WORD VOCAB_PATH TEMPLATES_PATH RATE_APPEND_QUESTION_MARK OUTPUT_PATH")
     exit()
 
 # If we've passed any args at all, then make sure they're correct. If no args then we just fall back to default
 if(len(sys.argv) > 1):
-    if(len(sys.argv) == 11):
+    if(len(sys.argv) == 12):
         try:
             NUM_SAMPLES = int(str(sys.argv[1]))
             TRAIN_PERCENT = float(str(sys.argv[2]))
@@ -71,6 +72,7 @@ if(len(sys.argv) > 1):
             VOCAB_PATH = str(sys.argv[8])
             TEMPLATES_PATH = str(sys.argv[9])
             RATE_APPEND_QUESTION_MARK = float(str(sys.argv[10]))
+            OUTPUT_PATH = str(sys.argv[11])
         except:
             show_usage()
     else:
@@ -155,8 +157,8 @@ def get_random_template() :
 def generate_data(file_name_src, file_name_tgt, count):
     print(f"Generating {count} to {file_name_src} and {file_name_tgt}")
     
-    out_file_src = open(file_name_src, "w+", encoding="utf-8")
-    out_file_tgt = open(file_name_tgt, "w+", encoding="utf-8")
+    out_file_src = open(OUTPUT_PATH + "\\" + file_name_src, "w+", encoding="utf-8")
+    out_file_tgt = open(OUTPUT_PATH + "\\" + file_name_tgt, "w+", encoding="utf-8")
 
     language_vocab_this_file = {}
     logic_vocab_this_file = {}
