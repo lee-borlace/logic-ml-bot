@@ -27,11 +27,11 @@ namespace NluTrainerDotNet
     /// </summary>
     public partial class MainWindow : Window
     {
-        const string PythonExecutablePath = @"C:\Users\lborlace\AppData\Local\Continuum\anaconda3\envs\spacy\python.exe";
-        const string TemplateFolder = @"C:\Users\lborlace\Documents\GitHub\Non-Forked\logic-ml-bot\v1\nlu_training_data_generator";
+        //const string PythonExecutablePath = @"C:\Users\lborlace\AppData\Local\Continuum\anaconda3\envs\spacy\python.exe";
+        //const string TemplateFolder = @"C:\Users\lborlace\Documents\GitHub\Non-Forked\logic-ml-bot\v1\nlu_training_data_generator";
 
-        //const string PythonExecutablePath = @"C:\Users\LeeBorlace\Anaconda3\envs\spacy\python.exe";
-        //const string TemplateFolder = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator";
+        const string PythonExecutablePath = @"C:\Users\LeeBorlace\Anaconda3\envs\spacy\python.exe";
+        const string TemplateFolder = @"C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator";
 
         const string ScriptPath = @"sentence_analyzer_cmd_line.py";
         const string TemplateFile = @"training_templates.json";

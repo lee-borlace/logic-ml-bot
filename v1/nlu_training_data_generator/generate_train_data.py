@@ -2,6 +2,7 @@ import json
 import random
 import re
 import sys
+import numpy as np
 
 NUM_SAMPLES = 10000
 
@@ -29,11 +30,23 @@ RATE_DROP_WORD = 0.00001 # Randomly drop a word from the training example
 RATE_APPEND_QUESTION_MARK = 0.75 
 
 
-VOCAB_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-TEMPLATES_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+VOCAB_FILE_NAME = "vocab.100k.json"
+TEMPLATES_FILE_NAME = "training_templates.json"
 
-#VOCAB_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\vocab.json"
-#TEMPLATES_PATH = "C:\\Users\\lborlace\\Documents\\GitHub\\Non-Forked\\logic-ml-bot\\v1\\nlu_training_data_generator\\training_templates.json"
+VOCAB_BASE_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\"
+TEMPLATES_BASE_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v1\\nlu_training_data_generator\\"
+
+VOCAB_PATH = VOCAB_BASE_PATH + VOCAB_FILE_NAME
+TEMPLATES_PATH = TEMPLATES_BASE_PATH + TEMPLATES_FILE_NAME
+
+# Get a normally distributed random number most highly concentrated around min_val and least highly around max_val
+def normal_distribution_random(min_val, max_val):
+    # Get a random number between 0 and 1, distributed normally around 0
+    mu, sigma = 0, 0.26
+    sample = abs(np.random.normal(mu, sigma, 1)[0])
+    number_range = max_val-min_val+1
+    retval = int(min_val + (number_range * sample))
+    return min(retval, max_val)
 
 
 def show_usage():
@@ -131,7 +144,9 @@ def get_random_template() :
         template_count_for_freq = len(template_freq_dict[freq])
       
     # Grab a random template index for the chosen frequency
-    random_template_index = random.randrange(0, template_count_for_freq)
+    
+    # random_template_index = random.randrange(0, template_count_for_freq)
+    random_template_index = normal_distribution_random(0, template_count_for_freq-1)
     
     return template_freq_dict[freq][random_template_index]
 
@@ -200,7 +215,10 @@ def generate_data(file_name_src, file_name_tgt, count):
                         # Check whether to randomly make an error for the POS tag
                         if random.uniform(0, 1) < RATE_WRONG_POS_TAG :
                             tag_length_for_pos = len(vocab[pos].keys())
-                            random_tag_index = random.randrange(0, tag_length_for_pos)
+                            
+                            #random_tag_index = random.randrange(0, tag_length_for_pos)
+                            random_tag_index = normal_distribution_random(0, tag_length_for_pos-1)
+                            
                             tag = list(vocab[pos].keys())[random_tag_index]
                         
                         # We have the tag in the vocab dict against the POS
@@ -208,7 +226,10 @@ def generate_data(file_name_src, file_name_tgt, count):
                             # There is at least 1 word against the POS and tag
                             if(len(vocab[pos][tag]) > 0) :
                                 # Pick a random word from the list for the POS + tag
-                                rand_index = random.randrange(0, len(vocab[pos][tag]))
+                                
+                                #rand_index = random.randrange(0, len(vocab[pos][tag]))
+                                rand_index = normal_distribution_random(0, len(vocab[pos][tag])-1)
+                                
                                 rand_word = vocab[pos][tag][rand_index]['t']
                                 word_to_output = str(rand_word).lower()
                                 
