@@ -40,6 +40,8 @@ TEMPLATES_BASE_PATH = "C:\\Users\\LeeBorlace\\Documents\\GitHub\\logic-ml-bot\\v
 VOCAB_PATH = VOCAB_BASE_PATH + VOCAB_FILE_NAME
 TEMPLATES_PATH = TEMPLATES_BASE_PATH + TEMPLATES_FILE_NAME
 
+SUBSTITUTE_EXAMPLES = True
+
 # Get a normally distributed random number most highly concentrated around min_val and least highly around max_val
 def normal_distribution_random(min_val, max_val):
     # Get a random number between 0 and 1, distributed normally around 0
@@ -55,12 +57,12 @@ def show_usage():
     print()
     print("Usage :")
     print()
-    print("python.exe generate_train_data.py NUM_SAMPLES TRAIN_PERCENT VAL_PERCENT TEST_PERCENT RATE_WORD_ORDER_SWAP RATE_WRONG_POS_TAG RATE_DROP_WORD VOCAB_PATH TEMPLATES_PATH RATE_APPEND_QUESTION_MARK OUTPUT_PATH")
+    print("python.exe generate_train_data.py NUM_SAMPLES TRAIN_PERCENT VAL_PERCENT TEST_PERCENT RATE_WORD_ORDER_SWAP RATE_WRONG_POS_TAG RATE_DROP_WORD VOCAB_PATH TEMPLATES_PATH RATE_APPEND_QUESTION_MARK OUTPUT_PATH SUBSTITUTE_EXAMPLES")
     exit()
 
 # If we've passed any args at all, then make sure they're correct. If no args then we just fall back to default
 if(len(sys.argv) > 1):
-    if(len(sys.argv) == 12):
+    if(len(sys.argv) == 13):
         try:
             NUM_SAMPLES = int(str(sys.argv[1]))
             TRAIN_PERCENT = float(str(sys.argv[2]))
@@ -73,14 +75,19 @@ if(len(sys.argv) > 1):
             TEMPLATES_PATH = str(sys.argv[9])
             RATE_APPEND_QUESTION_MARK = float(str(sys.argv[10]))
             OUTPUT_PATH = str(sys.argv[11])
+            SUBSTITUTE_EXAMPLES = str(sys.argv[12]).lower() in ['true', '1']
         except:
+            print("ERROR")
             show_usage()
     else:
+        print("MISMATCH")
         show_usage()
 
 TRAIN_COUNT = int(NUM_SAMPLES * TRAIN_PERCENT)
 VAL_COUNT = int(NUM_SAMPLES * VAL_PERCENT)
 TEST_COUNT = int(NUM_SAMPLES * TEST_PERCENT)
+
+print(f"SUBSTITUTE_EXAMPLES={SUBSTITUTE_EXAMPLES}")
     
 random.seed()
 
@@ -195,50 +202,52 @@ def generate_data(file_name_src, file_name_tgt, count):
             word_to_output = word
             
             if(word):
-                #check if word contains POS (i.e. it has "_" in it e.g. NOUN_1_NN)
-                pos_split = word.split('_')
-                
-                # Is a POS token if it contains 3 elements when splitting on "_" - generate random permutation 
-                if(pos_split and len(pos_split) == 3):
+                # If we're not substituting examples, then we'll just output the original token                
+                if SUBSTITUTE_EXAMPLES:
+                    #check if word contains POS (i.e. it has "_" in it e.g. NOUN_1_NN)
+                    pos_split = word.split('_')
                     
-                    # Split up based on template NOUN_1_NN
-                    pos = pos_split[0]
-                    index = pos_split[1]
-                    tag = pos_split[2]
-                    
-                    # We will store the lemma of the word in a dict where the key is for example just NOUN_1
-                    word_dict_key = f"{pos}_{index}"
-                    
-                    # We have the POS in the vocab dict
-                    if(pos in vocab) :
+                    # Is a POS token if it contains 3 elements when splitting on "_" - generate random permutation 
+                    if(pos_split and len(pos_split) == 3):
                         
-                        # Check whether to randomly make an error for the POS tag
-                        if random.uniform(0, 1) < RATE_WRONG_POS_TAG :
-                            tag_length_for_pos = len(vocab[pos].keys())
-                            random_tag_index = random.randrange(0, tag_length_for_pos)
-                            tag = list(vocab[pos].keys())[random_tag_index]
+                        # Split up based on template NOUN_1_NN
+                        pos = pos_split[0]
+                        index = pos_split[1]
+                        tag = pos_split[2]
                         
-                        # We have the tag in the vocab dict against the POS
-                        if(tag in vocab[pos]) :
-                            # There is at least 1 word against the POS and tag
-                            if(len(vocab[pos][tag]) > 0) :
-                                # Pick a random word from the list for the POS + tag
-                                
-                                #rand_index = random.randrange(0, len(vocab[pos][tag]))
-                                rand_index = normal_distribution_random(0, len(vocab[pos][tag])-1)
-                                
-                                rand_word = vocab[pos][tag][rand_index]['t']
-                                word_to_output = str(rand_word).lower()
-                                
-                                # Store lemma in dict
-                                word_dict[word_dict_key] = vocab[pos][tag][rand_index]['l']
-                        # Tag isn't in vocab for POS
+                        # We will store the lemma of the word in a dict where the key is for example just NOUN_1
+                        word_dict_key = f"{pos}_{index}"
+                        
+                        # We have the POS in the vocab dict
+                        if(pos in vocab) :
+                            
+                            # Check whether to randomly make an error for the POS tag
+                            if random.uniform(0, 1) < RATE_WRONG_POS_TAG :
+                                tag_length_for_pos = len(vocab[pos].keys())
+                                random_tag_index = random.randrange(0, tag_length_for_pos)
+                                tag = list(vocab[pos].keys())[random_tag_index]
+                            
+                            # We have the tag in the vocab dict against the POS
+                            if(tag in vocab[pos]) :
+                                # There is at least 1 word against the POS and tag
+                                if(len(vocab[pos][tag]) > 0) :
+                                    # Pick a random word from the list for the POS + tag
+                                    
+                                    #rand_index = random.randrange(0, len(vocab[pos][tag]))
+                                    rand_index = normal_distribution_random(0, len(vocab[pos][tag])-1)
+                                    
+                                    rand_word = vocab[pos][tag][rand_index]['t']
+                                    word_to_output = str(rand_word).lower()
+                                    
+                                    # Store lemma in dict
+                                    word_dict[word_dict_key] = vocab[pos][tag][rand_index]['l']
+                            # Tag isn't in vocab for POS
+                            else:
+                                continue
+                                    
+                        # POS isn't in vocab
                         else:
                             continue
-                                
-                    # POS isn't in vocab
-                    else:
-                        continue
                     
                     
                 generated_language_sequence.append(word_to_output)
@@ -313,7 +322,7 @@ def generate_data(file_name_src, file_name_tgt, count):
             # If the first element of the is present then we have a POS or another special constant, so try to match it back
             if(match[0]) :
                 token = match[0].strip()
-                if(token in word_dict) :
+                if(SUBSTITUTE_EXAMPLES and token in word_dict) :
                     token_to_output = word_dict[token].capitalize()
                 else:
                     token_to_output = token

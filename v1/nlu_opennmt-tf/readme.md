@@ -3,7 +3,7 @@ http://opennmt.net/OpenNMT-tf/quickstart.html
 https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md
 
 # Generating training data
-`python ..\nlu_training_data_generator\generate_train_data.py 500000 0.7 0.15 0.15 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75`
+`python ..\nlu_training_data_generator\generate_train_data.py 500000 0.7 0.15 0.15 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75 . true`
 
 `onmt-build-vocab --size 50000 --save_vocab english-vocab.txt english-train.txt`
 `onmt-build-vocab --size 50000 --save_vocab logic-vocab.txt logic-train.txt`
@@ -28,7 +28,7 @@ https://github.com/OpenNMT/Tokenizer/blob/master/docs/options.md
 
 ## Log
 ### Attempt 1
-`python ..\nlu_training_data_generator\generate_train_data.py 500000 0.7 0.15 0.15 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75`
+`python ..\nlu_training_data_generator\generate_train_data.py 500000 0.7 0.15 0.15 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75 . true`
 
 `onmt-build-vocab --size 29112 --save_vocab english-vocab.txt english-train.txt`
 
@@ -41,7 +41,7 @@ Loss bottomed out about 1.4
 ![loss](images/Annotation 2019-10-04 200554.png)
 
 ### Attempt 2 (TransformerBig)
-`python ..\nlu_training_data_generator\generate_train_data.py 1000000 0.63 0.19 0.18 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75`
+`python ..\nlu_training_data_generator\generate_train_data.py 1000000 0.63 0.19 0.18 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75 . true`
 
 `onmt-build-vocab --size 29640 --save_vocab english-vocab.txt english-train.txt`
 `onmt-build-vocab --size 27261 --save_vocab logic-vocab.txt logic-train.txt`
@@ -52,7 +52,7 @@ Had to keep revising the batch size down until it would fit in the GPU!
 Gave up, was not able to get it to run on the GPU, even with small batch sizes. Maybe there are other params to adjust?
 
 ### Attempt 2 (Transformer, more data, different train/eval ratio)
-`python ..\nlu_training_data_generator\generate_train_data.py 1000000 0.63 0.19 0.18 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75`
+`python ..\nlu_training_data_generator\generate_train_data.py 1000000 0.63 0.19 0.18 0.0001 0.0001 0.00001 C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\vocab.json C:\Users\LeeBorlace\Documents\GitHub\logic-ml-bot\v1\nlu_training_data_generator\training_templates.json 0.75 . true`
 
 `onmt-build-vocab --size 29640 --save_vocab english-vocab.txt english-train.txt`
 `onmt-build-vocab --size 27261 --save_vocab logic-vocab.txt logic-train.txt`
