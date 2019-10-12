@@ -29,8 +29,7 @@ def show_usage():
 if(len(sys.argv) == 2):
     RUN_DIR = str(sys.argv[1])
 else:
-    show_usage()
-    exit()
+    RUN_DIR = input("Enter run dir >")    
 
 BASE_EXPORT_PATH = ".\\" + RUN_DIR + "\\export\\latest"
 
@@ -64,8 +63,7 @@ export_dir_path = BASE_EXPORT_PATH + "\\" + latest_export_folder
 print(f"Using export path {export_dir_path}.")
 
 with tf.Session() as sess:
-    meta_graph_def = tf.saved_model.loader.load(
-        sess, [tf.saved_model.tag_constants.SERVING], export_dir_path)
+    meta_graph_def = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], export_dir_path)
     
     signature_def = meta_graph_def.signature_def["serving_default"]
 
@@ -85,13 +83,11 @@ with tf.Session() as sess:
         split = text.split(' ')
 
         inputs = {
-            input_tokens: [
-                split],
+            input_tokens: [split],
             input_length: [len(split)]
         }
-    
-        batch_tokens, batch_length = sess.run(
-            [output_tokens, output_length], feed_dict=inputs)
+        
+        batch_tokens, batch_length = sess.run([output_tokens, output_length], feed_dict=inputs)
     
         for tokens, length in zip(batch_tokens, batch_length):
             tokens, length = tokens[0], length[0]  # Take the best hypothesis.
