@@ -7,6 +7,10 @@ class LogicService:
         
     def tell(self, sentence):
         
+#        REGEX_PATTERN_PRED = "([A-Z][A-Za-z0-9_]*)\s*\("
+#        REGEX_PATTERN_CONSTANT = "[\(\,]\s*([A-Z][A-Za-z0-9_]*)\s*[\)\,]"
+#        REGEX_PATTERN_VARIABLE = "[\(\,]\s*([a-z][A-Za-z0-9_]*)\s*[\)\,]"
+        
         REGEX_PATTERN_PRED = "([A-Z][A-Za-z0-9_]*)\s*\("
         REGEX_PATTERN_CONSTANT = "[\(\,]\s*([A-Z][A-Za-z0-9_]*)\s*[\)\,]"
         REGEX_PATTERN_VARIABLE = "[\(\,]\s*([a-z][A-Za-z0-9_]*)\s*[\)\,]"
@@ -24,7 +28,7 @@ class LogicService:
                     preds.append(match)
 
         regex = re.compile(REGEX_PATTERN_CONSTANT)
-        matches = regex.findall(sentence)
+        matches = self.findAllWithOverlap(regex, sentence)
         if matches :
             for match in matches:
                 match = match.strip()
@@ -32,7 +36,7 @@ class LogicService:
                     constants.append(match)
 
         regex = re.compile(REGEX_PATTERN_VARIABLE)
-        matches = regex.findall(sentence)
+        matches = self.findAllWithOverlap(regex, sentence)
         if matches :
             for match in matches:
                 match = match.strip()
@@ -49,10 +53,11 @@ class LogicService:
         pos=0
         while True:
             result = regex.search(seq, pos)
+    
             if result is None:
                 break
             # resultlist.append(seq[result.start():result.end()])
-            resultlist.append(result.group(0))
+            resultlist.append(result.group(1))
             pos = result.start()+1
         return resultlist
             
