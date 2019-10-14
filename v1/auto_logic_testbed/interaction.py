@@ -9,8 +9,8 @@ import random
 
 random.seed()
 
-#MODEL = "en_core_web_lg"
-#nlp = spacy.load(MODEL)
+MODEL = "en_core_web_lg"
+nlp = spacy.load(MODEL)
 
 
 LOGIC_SERVICE_BASE_URL = "http://localhost:8081"
@@ -73,17 +73,20 @@ print("****************************************")
 print("Conversion to Logic")
 print("****************************************")
 
+sentences = []
 
 for token in doc:
     
     pos_sentence = f"{get_pos_formatted(token)}({get_token_id_as_const(token, randomConstantPrefixThisSentence)},{get_lemma_formatted(token)},{get_tag_formatted(token)})"
     print(pos_sentence)
-    logicService.tell(pos_sentence)
+    sentences.append(pos_sentence)
     
     if token.i != token.head.i:
         dep_sentence = f"{get_dep_formatted(token)}({get_token_id_as_const(token, randomConstantPrefixThisSentence)},{get_token_id_as_const(token.head, randomConstantPrefixThisSentence)})"
         print(dep_sentence)
-        logicService.tell(dep_sentence)
+        sentences.append(dep_sentence)
+
+logicService.tell(sentences)
         
         
         

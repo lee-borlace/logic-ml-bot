@@ -39,13 +39,12 @@ class LogicService:
                 if variable not in allVariables:
                     allVariables.append(variable)
         
-        self.__makeRemoteRequest(allSentences, allPreds, allConstants, allVariables)
-            
-                            
+        self.__makeRemoteTellRequest(allSentences, allPreds, allConstants, allVariables)
+
     # **********************************************************
     # Make request to remote logic service
     # **********************************************************
-    def __makeRemoteRequest(self, sentences, preds, constants, variables) :
+    def __makeRemoteTellRequest(self, sentences, preds, constants, variables) :
         
         baseUrl = self.baseUrl
         if not self.baseUrl.endswith("/"):
@@ -55,7 +54,32 @@ class LogicService:
         requestData = { "sentences" : sentences, "predicates" : preds, "constants" : constants, "functions" : []  } 
         headers = {"Content-type": "application/json"}           
         r = requests.post(url = url, json = requestData, headers = headers)
-                          
+        
+        
+    # **********************************************************
+    # Ask a question from the KB
+    # **********************************************************
+    def ask(self, sentence):
+        
+        sentence = sentence.replace(" ", "")
+        preds, constants, variables = self.__getPredsConstantsVariables(sentence)
+        result = self.__makeRemoteAskRequest(sentence, preds, constants, variables) 
+        return result
+        
+    # **********************************************************
+    # Make request to remote logic service
+    # **********************************************************
+    def __makeRemoteAskRequest(self, sentence, preds, constants, variables) :
+        
+        baseUrl = self.baseUrl
+        if not self.baseUrl.endswith("/"):
+            baseUrl =  self.baseUrl + "/"
+            
+        url = baseUrl + "api/ask"
+        requestData = { "query" : sentence, "predicates" : preds, "constants" : constants, "functions" : []  } 
+        headers = {"Content-type": "application/json"}           
+        r = requests.post(url = url, json = requestData, headers = headers)                            
+        return r.json()
                           
     # **********************************************************
     # Determine the predicates, constants and variables in a sentence
