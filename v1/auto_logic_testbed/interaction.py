@@ -22,7 +22,11 @@ while True:
         if(text == "\exit" or text == "\quit"):
             break
         
-        logicService.processNaturalLanguageSentence(text)
+        if not text.startswith("?"):
+            logicService.processNaturalLanguageSentence(text)
+        else:
+            askResult = logicService.ask(text[1:])
+            print(askResult)
 
     except:
         print("Unexpected error:", sys.exc_info()[0])
