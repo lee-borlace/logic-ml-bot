@@ -16,6 +16,12 @@ https://maven.apache.org/download.cgi
 
 Put this in PATH : C:\Program Files\apache-maven-3.6.2\bin
 
+Install Gradle:
+https://gradle.org/install/
+We end up with C:\Gradle\gradle-5.6.2\bin, and add that to PATH
+Ensure gradle-wrapper.properties points to the right version of gradle
+Delete .gradle from project dir and from C:\Users\LeeBorlace
+
 ## To Build
 ```mvn clean package```
 
