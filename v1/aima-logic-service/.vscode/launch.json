@@ -4,13 +4,66 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
-
         {
             "type": "java",
-            "name": "Debug (Launch) - Current File",
+            "name": "Debug (Launch)",
             "request": "launch",
-            "mainClass": "${file}"
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-RunCYK<aima-logic-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "aima.core.nlp.parsing.RunCYK",
+            "args": "",
+            "projectName": "aima-logic-service"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-RunHITS<aima-logic-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "aima.core.nlp.ranking.RunHITS",
+            "args": "",
+            "projectName": "aima-logic-service"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-PowersOf2<aima-logic-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "aima.core.util.PowersOf2",
+            "args": "",
+            "projectName": "aima-logic-service"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Application<aima-logic-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "hello.Application",
+            "args": "",
+            "projectName": "aima-logic-service"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Attach)",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": "<debug port of remote debuggee>"
         }
     ]
 }
