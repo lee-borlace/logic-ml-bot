@@ -9,8 +9,6 @@ LOGIC_SERVICE_BASE_URL = "http://localhost:8081"
 # MODEL = "en_core_web_lg"
 MODEL = "en_core_web_sm"
 
-print("\exit or \quit to quit")
-
 logicService = LogicService(MODEL, LOGIC_SERVICE_BASE_URL)
 
 print("\exit or \quit to quit")
@@ -22,7 +20,11 @@ while True:
         if(text == "\exit" or text == "\quit"):
             break
         
-        logicService.processNaturalLanguageSentence(text)
+        if not text.startswith("?"):
+            logicService.processNaturalLanguageSentence(text)
+        else:
+            askResult = logicService.ask(text[1:])
+            print(askResult)
 
     except:
         print("Unexpected error:", sys.exc_info()[0])

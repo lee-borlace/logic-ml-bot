@@ -16,6 +16,12 @@ class LogicService:
         random.seed()
         self.baseUrl = baseUrl.strip()
 
+    def __getPosPred(self, token):
+        return f"Pos_{self.__get_pos_formatted(token)}"
+    
+    def __getDepPred(self, token):
+        return f"Dep_{self.__get_dep_formatted(token)}"
+
 
     # **********************************************************
     # Process natural language sentence
@@ -43,12 +49,12 @@ class LogicService:
 
         for token in doc:
             
-            pos_sentence = f"Spc_Pos_{self.__get_pos_formatted(token)}({self.__get_token_id_as_const(token, randomConstantPrefixThisSentence)},{self.__get_lemma_formatted(token)},{self.__get_tag_formatted(token)})"
+            pos_sentence = f"{self.__getPosPred(token)}({self.__get_token_id_as_const(token, randomConstantPrefixThisSentence)},{self.__get_lemma_formatted(token)},{self.__get_tag_formatted(token)})"
             print(pos_sentence)
             sentences.append(pos_sentence)
             
             if token.i != token.head.i:
-                dep_sentence = f"Spc_Dep_{self.__get_dep_formatted(token)}({self.__get_token_id_as_const(token, randomConstantPrefixThisSentence)},{self.__get_token_id_as_const(token.head, randomConstantPrefixThisSentence)})"
+                dep_sentence = f"{self.__getDepPred(token)}({self.__get_token_id_as_const(token, randomConstantPrefixThisSentence)},{self.__get_token_id_as_const(token.head, randomConstantPrefixThisSentence)})"
                 print(dep_sentence)
                 sentences.append(dep_sentence)
 
@@ -183,7 +189,9 @@ class LogicService:
 
 
     def __get_token_id_as_const(self, token, randomConstantPrefixThisSentence) :
-        return f"Spc_Cnst_{randomConstantPrefixThisSentence}_{token.i}"
+        return f"C{token.i}"
+        #return f"Cnst_{randomConstantPrefixThisSentence}_{token.i}"
+        #return f"Spc_Cnst_{randomConstantPrefixThisSentence}_{token.i}"
         #return f"Const_{token.i}"
 
     def __get_pos_formatted(self, token):
